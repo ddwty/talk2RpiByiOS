@@ -1,17 +1,19 @@
 import SwiftUI
 import Network
 
-struct ContentView: View {
+struct ClientView: View {
     @State private var connection: NWConnection?
     @State private var receivedImages: [UIImage] = []
     @State private var isConnected = false
     @State private var isLoading = false
+    @State private var port: String = "1234"
 
     var body: some View {
         VStack {
             Text("TCP Client")
                 .font(.largeTitle)
                 .padding()
+            
 
             if isConnected {
                 if isLoading {
@@ -65,7 +67,7 @@ struct ContentView: View {
 
     func startConnection() {
         let host = NWEndpoint.Host("172.20.10.2") // 树莓派的实际 IP 地址
-        let port = NWEndpoint.Port("1223")!
+        let port = NWEndpoint.Port("12233")!
 
         connection = NWConnection(host: host, port: port, using: .tcp)
         connection?.stateUpdateHandler = { newState in
@@ -155,6 +157,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ClientView()
     }
 }
