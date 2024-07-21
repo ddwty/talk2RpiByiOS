@@ -3,31 +3,80 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D13B87B2C47F0EF00004873 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 3D13B87A2C47F0EF00004873 /* Starscream */; };
+		3D13B8872C49088D00004873 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D13B8862C49088D00004873 /* ChartView.swift */; };
+		3D13B88A2C49090800004873 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 3D13B8892C49090800004873 /* SwiftUICharts */; };
+		3D13B8902C4A36A700004873 /* AttitudeIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D13B88F2C4A36A700004873 /* AttitudeIndicatorView.swift */; };
 		3DF26C182C423DB700FE2A12 /* talkWithRpiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C172C423DB700FE2A12 /* talkWithRpiApp.swift */; };
 		3DF26C1A2C423DB700FE2A12 /* ClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C192C423DB700FE2A12 /* ClientView.swift */; };
 		3DF26C1E2C423DB900FE2A12 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DF26C1D2C423DB900FE2A12 /* Assets.xcassets */; };
 		3DF26C212C423DB900FE2A12 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DF26C202C423DB900FE2A12 /* Preview Assets.xcassets */; };
 		3DF26C282C42588400FE2A12 /* SeverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C272C42588400FE2A12 /* SeverView.swift */; };
+		3DF26C2F2C42A6D600FE2A12 /* PureUsbView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C2E2C42A6D600FE2A12 /* PureUsbView.swift */; };
+		3DF26C312C42B52E00FE2A12 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C302C42B52E00FE2A12 /* ContentView.swift */; };
+		3DF26C352C43F57200FE2A12 /* PureUsbImgView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C342C43F57200FE2A12 /* PureUsbImgView.swift */; };
+		3DF26C392C45509800FE2A12 /* ViaWifiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C382C45509800FE2A12 /* ViaWifiView.swift */; };
+		3DF26C3B2C45701A00FE2A12 /* ForTCP_Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C3A2C45701A00FE2A12 /* ForTCP_Server.swift */; };
+		3DF26C3D2C469CB000FE2A12 /* ViaEthernetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C3C2C469CB000FE2A12 /* ViaEthernetView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D13B8832C48264900004873 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		3D13B8862C49088D00004873 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		3D13B88F2C4A36A700004873 /* AttitudeIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttitudeIndicatorView.swift; sourceTree = "<group>"; };
 		3DF26C142C423DB700FE2A12 /* talkWithRpi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = talkWithRpi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DF26C172C423DB700FE2A12 /* talkWithRpiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talkWithRpiApp.swift; sourceTree = "<group>"; };
 		3DF26C192C423DB700FE2A12 /* ClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientView.swift; sourceTree = "<group>"; };
 		3DF26C1D2C423DB900FE2A12 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3DF26C202C423DB900FE2A12 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3DF26C272C42588400FE2A12 /* SeverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeverView.swift; sourceTree = "<group>"; };
+		3DF26C2E2C42A6D600FE2A12 /* PureUsbView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PureUsbView.swift; sourceTree = "<group>"; };
+		3DF26C302C42B52E00FE2A12 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		3DF26C342C43F57200FE2A12 /* PureUsbImgView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PureUsbImgView.swift; sourceTree = "<group>"; };
+		3DF26C382C45509800FE2A12 /* ViaWifiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViaWifiView.swift; sourceTree = "<group>"; };
+		3DF26C3A2C45701A00FE2A12 /* ForTCP_Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForTCP_Server.swift; sourceTree = "<group>"; };
+		3DF26C3C2C469CB000FE2A12 /* ViaEthernetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViaEthernetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		3D13B8942C4BE8C700004873 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				TESTFrequency.swift,
+				TestMotion.swift,
+				TestWebsocket.swift,
+			);
+			target = 3DF26C132C423DB700FE2A12 /* talkWithRpi */;
+		};
+		3DF26C2C2C42A55300FE2A12 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				MotionDataModel.swift,
+				TCPClient.swift,
+				TCPImgServer.swift,
+				TCPServer.swift,
+				ViaWifiViewModel.swift,
+			);
+			target = 3DF26C132C423DB700FE2A12 /* talkWithRpi */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		3D13B8932C4BE8B400004873 /* TestView */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3D13B8942C4BE8C700004873 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = TestView; sourceTree = "<group>"; };
+		3DF26C2B2C42A54900FE2A12 /* Model */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3DF26C2C2C42A55300FE2A12 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Model; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		3DF26C112C423DB700FE2A12 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D13B87B2C47F0EF00004873 /* Starscream in Frameworks */,
+				3D13B88A2C49090800004873 /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,9 +102,10 @@
 		3DF26C162C423DB700FE2A12 /* talkWithRpi */ = {
 			isa = PBXGroup;
 			children = (
+				3D13B8832C48264900004873 /* Info.plist */,
+				3DF26C2D2C42A55800FE2A12 /* View */,
+				3DF26C2B2C42A54900FE2A12 /* Model */,
 				3DF26C172C423DB700FE2A12 /* talkWithRpiApp.swift */,
-				3DF26C192C423DB700FE2A12 /* ClientView.swift */,
-				3DF26C272C42588400FE2A12 /* SeverView.swift */,
 				3DF26C1D2C423DB900FE2A12 /* Assets.xcassets */,
 				3DF26C1F2C423DB900FE2A12 /* Preview Content */,
 			);
@@ -68,6 +118,24 @@
 				3DF26C202C423DB900FE2A12 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		3DF26C2D2C42A55800FE2A12 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3D13B8932C4BE8B400004873 /* TestView */,
+				3DF26C302C42B52E00FE2A12 /* ContentView.swift */,
+				3DF26C192C423DB700FE2A12 /* ClientView.swift */,
+				3DF26C2E2C42A6D600FE2A12 /* PureUsbView.swift */,
+				3DF26C382C45509800FE2A12 /* ViaWifiView.swift */,
+				3DF26C3C2C469CB000FE2A12 /* ViaEthernetView.swift */,
+				3DF26C272C42588400FE2A12 /* SeverView.swift */,
+				3D13B8862C49088D00004873 /* ChartView.swift */,
+				3D13B88F2C4A36A700004873 /* AttitudeIndicatorView.swift */,
+				3DF26C342C43F57200FE2A12 /* PureUsbImgView.swift */,
+				3DF26C3A2C45701A00FE2A12 /* ForTCP_Server.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,6 +154,10 @@
 			dependencies = (
 			);
 			name = talkWithRpi;
+			packageProductDependencies = (
+				3D13B87A2C47F0EF00004873 /* Starscream */,
+				3D13B8892C49090800004873 /* SwiftUICharts */,
+			);
 			productName = talkWithRpi;
 			productReference = 3DF26C142C423DB700FE2A12 /* talkWithRpi.app */;
 			productType = "com.apple.product-type.application";
@@ -114,6 +186,10 @@
 				Base,
 			);
 			mainGroup = 3DF26C0B2C423DB700FE2A12;
+			packageReferences = (
+				3D13B8792C47F0EF00004873 /* XCRemoteSwiftPackageReference "Starscream" */,
+				3D13B8882C49090800004873 /* XCRemoteSwiftPackageReference "ChartView" */,
+			);
 			productRefGroup = 3DF26C152C423DB700FE2A12 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -141,7 +217,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				3DF26C282C42588400FE2A12 /* SeverView.swift in Sources */,
+				3DF26C312C42B52E00FE2A12 /* ContentView.swift in Sources */,
+				3D13B8902C4A36A700004873 /* AttitudeIndicatorView.swift in Sources */,
+				3D13B8872C49088D00004873 /* ChartView.swift in Sources */,
 				3DF26C1A2C423DB700FE2A12 /* ClientView.swift in Sources */,
+				3DF26C3B2C45701A00FE2A12 /* ForTCP_Server.swift in Sources */,
+				3DF26C2F2C42A6D600FE2A12 /* PureUsbView.swift in Sources */,
+				3DF26C352C43F57200FE2A12 /* PureUsbImgView.swift in Sources */,
+				3DF26C392C45509800FE2A12 /* ViaWifiView.swift in Sources */,
+				3DF26C3D2C469CB000FE2A12 /* ViaEthernetView.swift in Sources */,
 				3DF26C182C423DB700FE2A12 /* talkWithRpiApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,12 +363,16 @@
 				DEVELOPMENT_TEAM = 7DTG838RB6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = talkWithRpi/Info.plist;
+				INFOPLIST_KEY_NSMotionUsageDescription = "This app requires access to the accelerometer";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "\"\"";
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -309,12 +397,16 @@
 				DEVELOPMENT_TEAM = 7DTG838RB6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = talkWithRpi/Info.plist;
+				INFOPLIST_KEY_NSMotionUsageDescription = "This app requires access to the accelerometer";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "\"\"";
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -350,6 +442,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3D13B8792C47F0EF00004873 /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/Starscream";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.8;
+			};
+		};
+		3D13B8882C49090800004873 /* XCRemoteSwiftPackageReference "ChartView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppPear/ChartView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3D13B87A2C47F0EF00004873 /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D13B8792C47F0EF00004873 /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
+		};
+		3D13B8892C49090800004873 /* SwiftUICharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D13B8882C49090800004873 /* XCRemoteSwiftPackageReference "ChartView" */;
+			productName = SwiftUICharts;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3DF26C0C2C423DB700FE2A12 /* Project object */;
 }

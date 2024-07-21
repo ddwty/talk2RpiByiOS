@@ -11,7 +11,8 @@ import SwiftUI
 struct talkWithRpiApp: App {
     var body: some Scene {
         WindowGroup {
-            ClientView()
+//            ClientView()
+            ContentView()
         }
     }
 }
