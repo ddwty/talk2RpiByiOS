@@ -30,17 +30,26 @@ struct ContentView: View {
 //                .tabItem {
 //                    Text("AttitudeIndicator" )
 //                }
-            TestWebsocket()
-                .tabItem {
-                    Text("TestWebsocket" )
-                }
+//            CameraView()
+//                .tabItem {
+//                    Text("Camera" )
+//                }
+            
+//            TestWebsocket()
+//                .tabItem {
+//                    Text("TestWebsocket" )
+//                }
 //            TESTView()
 //                .tabItem {
 //                    Text("加速度" )
 //                }
-           ChartView()
+//           ChartView()
+//                .tabItem {
+//                    Text("图" )
+//                }
+            PanelView()
                 .tabItem {
-                    Text("图" )
+                    Text("Panel" )
                 }
             
         }

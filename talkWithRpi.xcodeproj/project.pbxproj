@@ -11,55 +11,64 @@
 		3D13B8872C49088D00004873 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D13B8862C49088D00004873 /* ChartView.swift */; };
 		3D13B88A2C49090800004873 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 3D13B8892C49090800004873 /* SwiftUICharts */; };
 		3D13B8902C4A36A700004873 /* AttitudeIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D13B88F2C4A36A700004873 /* AttitudeIndicatorView.swift */; };
+		3DDFF1F32C4E5469006BD86C /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDFF1F22C4E5469006BD86C /* PanelView.swift */; };
+		3DDFF1F62C4EA11A006BD86C /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDFF1F52C4EA11A006BD86C /* HistoryView.swift */; };
+		3DDFF1F82C4EA5DE006BD86C /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDFF1F72C4EA5DE006BD86C /* SettingView.swift */; };
 		3DF26C182C423DB700FE2A12 /* talkWithRpiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C172C423DB700FE2A12 /* talkWithRpiApp.swift */; };
-		3DF26C1A2C423DB700FE2A12 /* ClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C192C423DB700FE2A12 /* ClientView.swift */; };
 		3DF26C1E2C423DB900FE2A12 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DF26C1D2C423DB900FE2A12 /* Assets.xcassets */; };
 		3DF26C212C423DB900FE2A12 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DF26C202C423DB900FE2A12 /* Preview Assets.xcassets */; };
-		3DF26C282C42588400FE2A12 /* SeverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C272C42588400FE2A12 /* SeverView.swift */; };
-		3DF26C2F2C42A6D600FE2A12 /* PureUsbView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C2E2C42A6D600FE2A12 /* PureUsbView.swift */; };
 		3DF26C312C42B52E00FE2A12 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C302C42B52E00FE2A12 /* ContentView.swift */; };
-		3DF26C352C43F57200FE2A12 /* PureUsbImgView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C342C43F57200FE2A12 /* PureUsbImgView.swift */; };
 		3DF26C392C45509800FE2A12 /* ViaWifiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C382C45509800FE2A12 /* ViaWifiView.swift */; };
-		3DF26C3B2C45701A00FE2A12 /* ForTCP_Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C3A2C45701A00FE2A12 /* ForTCP_Server.swift */; };
-		3DF26C3D2C469CB000FE2A12 /* ViaEthernetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C3C2C469CB000FE2A12 /* ViaEthernetView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3D13B8832C48264900004873 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3D13B8862C49088D00004873 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		3D13B88F2C4A36A700004873 /* AttitudeIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttitudeIndicatorView.swift; sourceTree = "<group>"; };
+		3DDFF1F22C4E5469006BD86C /* PanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
+		3DDFF1F52C4EA11A006BD86C /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		3DDFF1F72C4EA5DE006BD86C /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		3DF26C142C423DB700FE2A12 /* talkWithRpi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = talkWithRpi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DF26C172C423DB700FE2A12 /* talkWithRpiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talkWithRpiApp.swift; sourceTree = "<group>"; };
-		3DF26C192C423DB700FE2A12 /* ClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientView.swift; sourceTree = "<group>"; };
 		3DF26C1D2C423DB900FE2A12 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3DF26C202C423DB900FE2A12 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		3DF26C272C42588400FE2A12 /* SeverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeverView.swift; sourceTree = "<group>"; };
-		3DF26C2E2C42A6D600FE2A12 /* PureUsbView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PureUsbView.swift; sourceTree = "<group>"; };
 		3DF26C302C42B52E00FE2A12 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		3DF26C342C43F57200FE2A12 /* PureUsbImgView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PureUsbImgView.swift; sourceTree = "<group>"; };
 		3DF26C382C45509800FE2A12 /* ViaWifiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViaWifiView.swift; sourceTree = "<group>"; };
-		3DF26C3A2C45701A00FE2A12 /* ForTCP_Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForTCP_Server.swift; sourceTree = "<group>"; };
-		3DF26C3C2C469CB000FE2A12 /* ViaEthernetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViaEthernetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
 		3D13B8942C4BE8C700004873 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				ClientView.swift,
+				ForTCP_Server.swift,
+				PureUsbImgView.swift,
+				PureUsbView.swift,
+				SeverView.swift,
 				TESTFrequency.swift,
 				TestMotion.swift,
 				TestWebsocket.swift,
+				ViaEthernetView.swift,
+			);
+			target = 3DF26C132C423DB700FE2A12 /* talkWithRpi */;
+		};
+		3DDFF1ED2C4E15C2006BD86C /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				CameraPreviewView.swift,
+				CameraView.swift,
 			);
 			target = 3DF26C132C423DB700FE2A12 /* talkWithRpi */;
 		};
 		3DF26C2C2C42A55300FE2A12 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				CameraManager.swift,
+				CameraModel.swift,
 				MotionDataModel.swift,
 				TCPClient.swift,
 				TCPImgServer.swift,
 				TCPServer.swift,
-				ViaWifiViewModel.swift,
+				WebSocketManager.swift,
 			);
 			target = 3DF26C132C423DB700FE2A12 /* talkWithRpi */;
 		};
@@ -67,6 +76,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3D13B8932C4BE8B400004873 /* TestView */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3D13B8942C4BE8C700004873 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = TestView; sourceTree = "<group>"; };
+		3DDFF1EC2C4E15B8006BD86C /* Camera */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3DDFF1ED2C4E15C2006BD86C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Camera; sourceTree = "<group>"; };
 		3DF26C2B2C42A54900FE2A12 /* Model */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3DF26C2C2C42A55300FE2A12 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Model; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -102,7 +112,6 @@
 		3DF26C162C423DB700FE2A12 /* talkWithRpi */ = {
 			isa = PBXGroup;
 			children = (
-				3D13B8832C48264900004873 /* Info.plist */,
 				3DF26C2D2C42A55800FE2A12 /* View */,
 				3DF26C2B2C42A54900FE2A12 /* Model */,
 				3DF26C172C423DB700FE2A12 /* talkWithRpiApp.swift */,
@@ -123,17 +132,15 @@
 		3DF26C2D2C42A55800FE2A12 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3DDFF1F22C4E5469006BD86C /* PanelView.swift */,
 				3D13B8932C4BE8B400004873 /* TestView */,
 				3DF26C302C42B52E00FE2A12 /* ContentView.swift */,
-				3DF26C192C423DB700FE2A12 /* ClientView.swift */,
-				3DF26C2E2C42A6D600FE2A12 /* PureUsbView.swift */,
+				3DDFF1EC2C4E15B8006BD86C /* Camera */,
 				3DF26C382C45509800FE2A12 /* ViaWifiView.swift */,
-				3DF26C3C2C469CB000FE2A12 /* ViaEthernetView.swift */,
-				3DF26C272C42588400FE2A12 /* SeverView.swift */,
 				3D13B8862C49088D00004873 /* ChartView.swift */,
 				3D13B88F2C4A36A700004873 /* AttitudeIndicatorView.swift */,
-				3DF26C342C43F57200FE2A12 /* PureUsbImgView.swift */,
-				3DF26C3A2C45701A00FE2A12 /* ForTCP_Server.swift */,
+				3DDFF1F72C4EA5DE006BD86C /* SettingView.swift */,
+				3DDFF1F52C4EA11A006BD86C /* HistoryView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -216,16 +223,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3DF26C282C42588400FE2A12 /* SeverView.swift in Sources */,
 				3DF26C312C42B52E00FE2A12 /* ContentView.swift in Sources */,
+				3DDFF1F62C4EA11A006BD86C /* HistoryView.swift in Sources */,
 				3D13B8902C4A36A700004873 /* AttitudeIndicatorView.swift in Sources */,
 				3D13B8872C49088D00004873 /* ChartView.swift in Sources */,
-				3DF26C1A2C423DB700FE2A12 /* ClientView.swift in Sources */,
-				3DF26C3B2C45701A00FE2A12 /* ForTCP_Server.swift in Sources */,
-				3DF26C2F2C42A6D600FE2A12 /* PureUsbView.swift in Sources */,
-				3DF26C352C43F57200FE2A12 /* PureUsbImgView.swift in Sources */,
 				3DF26C392C45509800FE2A12 /* ViaWifiView.swift in Sources */,
-				3DF26C3D2C469CB000FE2A12 /* ViaEthernetView.swift in Sources */,
+				3DDFF1F82C4EA5DE006BD86C /* SettingView.swift in Sources */,
+				3DDFF1F32C4E5469006BD86C /* PanelView.swift in Sources */,
 				3DF26C182C423DB700FE2A12 /* talkWithRpiApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,7 +368,11 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = talkWithRpi/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Access camera";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Use Micrephone";
 				INFOPLIST_KEY_NSMotionUsageDescription = "This app requires access to the accelerometer";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Save Photo";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -398,7 +406,11 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = talkWithRpi/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Access camera";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Use Micrephone";
 				INFOPLIST_KEY_NSMotionUsageDescription = "This app requires access to the accelerometer";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Save Photo";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

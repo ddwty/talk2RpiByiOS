@@ -1,5 +1,5 @@
 //
-//  ViaWifiViewModel.swift
+//  WebSocketManager.swift
 //  talkWithRpi
 //
 //  Created by Tianyu on 7/17/24.
@@ -8,7 +8,7 @@
 import Foundation
 import Starscream
 import UIKit
-
+//
 struct TimeStamp: Codable {
     let secs: Int
     let nanos: Int
@@ -28,64 +28,105 @@ class WebSocketManager: ObservableObject {
     @Published var imuData: ImuData?
     @Published var fingerData: FingerForce?
     @Published var time: TimeStamp?
+//    @Published var connected = false {
+//            didSet {
+//                if connected {
+//                    pingTimer?.invalidate()
+//                } else if shouldPing {
+//                    startPingTimer()
+//                }
+//            }
+//        }
     @Published var connected = false
     @Published var isRecording = false
     @Published var image: UIImage?
     @Published var hostName: String = "raspberrypi.local"
+    @Published var receivedMessage: String = ""
     
     private var imuSocket: WebSocket?
     private var videoSocket: WebSocket?
     private var leftFingerSocket: WebSocket?
-    private var socket: WebSocket?
+    private var pingTimer: Timer?
+    private var shouldPing: Bool = true
+    
+//    private var socket: WebSocket?
     
 
     init() {
-        connect()
-        pingServer()
-        var request = URLRequest(url: URL(string: "ws://\(hostName)")!)
-        request.timeoutInterval = 5
-        socket = WebSocket(request: request)
-        socket?.delegate = self
+
+//        pingServer()
+        startPingTimer()
+
+//        var request = URLRequest(url: URL(string: "ws://\(self.hostName)")!)
+//        request.timeoutInterval = 5
+//        socket = WebSocket(request: request)
+//        socket?.delegate = self
     }
     
-    func connect() {
-        socket?.connect()
-       
-        var request = URLRequest(url: URL(string: "ws://\(self.hostName):8080/imu")!)
-        imuSocket = WebSocket(request: request)
-        imuSocket?.delegate = self
-        imuSocket?.connect()
-        
-        request = URLRequest(url: URL(string: "ws://\(self.hostName):8080/camera")!)
-        videoSocket = WebSocket(request: request)
-        videoSocket?.delegate = self
-        videoSocket?.connect()
-        
-        request = URLRequest(url: URL(string: "ws://\(self.hostName):8080/left_finger/force")!)
-        leftFingerSocket = WebSocket(request: request)
-        leftFingerSocket?.delegate = self
-        leftFingerSocket?.connect()
-    }
     
-    func disconnect() {
-        imuSocket?.disconnect()
-        videoSocket?.disconnect()
-        leftFingerSocket?.disconnect()
+    private func startPingTimer() {
+        pingTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            self.pingServer()
+        }
     }
     
     func pingServer() {
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+//        guard shouldPing else { return }
+//            guard !connected else { return }
             guard let url = URL(string: "http://\(self.hostName):8080/ping") else { return }
             URLSession.shared.dataTask(with: url) { data, response, error in
                 if let httpResponse = response as? HTTPURLResponse {
                     DispatchQueue.main.async {
                         self.connected = (httpResponse.statusCode == 200)
-                        print("Connected")
+                        if self.connected {
+                            print("Connected")
+                        }
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.connected = false
                     }
                 }
             }.resume()
         }
+    func reConnectToServer() {
+        shouldPing = true
+        pingServer()
     }
+    
+    func disconnect() {
+        shouldPing = false
+        connected = false
+        imuSocket?.disconnect()
+        videoSocket?.disconnect()
+        leftFingerSocket?.disconnect()
+    }
+    
+    func getForceData() {
+
+//        var request = URLRequest(url: URL(string: "ws://\(self.hostName):8080/imu")!)
+//        imuSocket = WebSocket(request: request)
+//        imuSocket?.delegate = self
+//        imuSocket?.connect()
+//        
+//        request = URLRequest(url: URL(string: "ws://\(self.hostName):8080/camera")!)
+//        videoSocket = WebSocket(request: request)
+//        videoSocket?.delegate = self
+//        videoSocket?.connect()
+        
+        let fingerRequest = URLRequest(url: URL(string: "ws://\(self.hostName):8080/left_finger/force")!)
+        leftFingerSocket = WebSocket(request: fingerRequest)
+        leftFingerSocket?.delegate = self
+        leftFingerSocket?.connect()
+    }
+    
+    func getCameraData() {
+       let  camerRequest = URLRequest(url: URL(string: "ws://\(self.hostName):8080/camera")!)
+       videoSocket = WebSocket(request: camerRequest)
+       videoSocket?.delegate = self
+       videoSocket?.connect()
+    }
+    
     
     func calibrateIMU() {
         guard let url = URL(string: "http://\(self.hostName):8080/imu/calibrate") else { return }
@@ -152,6 +193,10 @@ extension WebSocketManager: WebSocketDelegate {
             print("WebSocket disconnected: \(reason) with code: \(code)")
         case .text(let string):
             handleMessage(string: string, client: client)
+            print("Received text: \(string)")
+            DispatchQueue.main.async {
+                self.receivedMessage = string
+            }
         case .binary(let data):
             handleData(data: data, client: client)
         case .ping(_):
@@ -166,13 +211,14 @@ extension WebSocketManager: WebSocketDelegate {
             DispatchQueue.main.async {
                 self.connected = false
             }
+            print("websocket is cancelled")
         case .peerClosed:
             break
         case .error(let error):
             DispatchQueue.main.async {
                 self.connected = false
             }
-            print("WebSocket error: \(String(describing: error))")
+            print("websocket encountered an error: \(error?.localizedDescription ?? "")")
         }
     }
     
@@ -215,3 +261,93 @@ extension WebSocketManager: WebSocketDelegate {
         }
     }
 }
+
+//import Foundation
+//import Starscream
+//
+//class WebSocketManager: ObservableObject {
+//    @Published var connected = false
+//    private var socket: WebSocket?
+//    private var pingTimer: Timer?
+//
+//    init() {
+//        connect()
+//        startPingTimer()
+//    }
+//    
+//    func connect() {
+//        var request = URLRequest(url: URL(string: "ws://raspberrypi.local:8080")!)
+//        request.timeoutInterval = 5
+//        socket = WebSocket(request: request)
+//        socket?.delegate = self
+//        socket?.connect()
+//    }
+//    
+//    func disconnect() {
+//        socket?.disconnect()
+//        pingTimer?.invalidate()
+//    }
+//    
+//    private func startPingTimer() {
+//        pingTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+//            self.sendPing()
+//        }
+//    }
+//    
+//    private func sendPing() {
+//        guard let url = URL(string: "http://raspberrypi.local:8080/ping") else { return }
+//        URLSession.shared.dataTask(with: url) { data, response, error in
+//            if let httpResponse = response as? HTTPURLResponse {
+//                DispatchQueue.main.async {
+//                    self.connected = (httpResponse.statusCode == 200)
+//                    print("Connected")
+//                }
+//            } else {
+//                DispatchQueue.main.async {
+//                    self.connected = false
+//                    print("Not Connected: \(error?.localizedDescription ?? "Unknown error")")
+//                }
+//            }
+//        }.resume()
+//    }
+//}
+//
+//extension WebSocketManager: WebSocketDelegate {
+//    func didReceive(event: Starscream.WebSocketEvent, client: any Starscream.WebSocketClient) {
+//        switch event {
+//        case .connected(let headers):
+//            DispatchQueue.main.async {
+//                self.connected = true
+//            }
+//            print("WebSocket connected with headers: \(headers)")
+//        case .disconnected(let reason, let code):
+//            DispatchQueue.main.async {
+//                self.connected = false
+//            }
+//            print("WebSocket disconnected: \(reason) with code: \(code)")
+//        case .text(let string):
+//            print("Received text: \(string)")
+//        case .binary(let data):
+//            print("Received binary data: \(data.count) bytes")
+//        case .ping(_):
+//            break
+//        case .pong(_):
+//            break
+//        case .viabilityChanged(_):
+//            break
+//        case .reconnectSuggested(_):
+//            break
+//        case .cancelled:
+//            DispatchQueue.main.async {
+//                self.connected = false
+//            }
+//        case .peerClosed:
+//            break
+//        case .error(let error):
+//            DispatchQueue.main.async {
+//                self.connected = false
+//            }
+//            print("WebSocket error: \(String(describing: error))")
+//        }
+//    }
+//}

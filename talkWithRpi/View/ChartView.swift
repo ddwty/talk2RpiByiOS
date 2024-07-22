@@ -20,7 +20,6 @@ struct ChartView: View {
     @State var isReadingData = false
     
     var body: some View {
-        ScrollView {
             VStack {
                 AttitudeIndicatorView(motionManager: motionManager)
                 
@@ -37,21 +36,21 @@ struct ChartView: View {
                     .buttonStyle(.bordered)
                     
                     
-                    Button(action: {
-                        if self.isReadingData {
-                            self.motionManager.stopUpdates()
-                        } else {
-                            self.motionManager.startUpdates()
-                        }
-                        self.isReadingData.toggle()
-                    }) {
-                        if isReadingData {
-                            Text("Stop")
-                        } else {
-                            Text("Start")
-                        }
-                    }
-                    .buttonStyle(.bordered)
+//                    Button(action: {
+//                        if self.isReadingData {
+//                            self.motionManager.stopUpdates()
+//                        } else {
+//                            self.motionManager.startUpdates()
+//                        }
+//                        self.isReadingData.toggle()
+//                    }) {
+//                        if isReadingData {
+//                            Text("Stop")
+//                        } else {
+//                            Text("Start")
+//                        }
+//                    }
+//                    .buttonStyle(.bordered)
                     
                     Button(action: { self.motionManager.resetReferenceFrame() }) {
                         Text("Reset Reference")
@@ -63,49 +62,50 @@ struct ChartView: View {
                 .padding()
                 
                 if showCharts {
-                    HStack {
-                        VStack {
-                            Chart {
-                                ForEach(attitudeKeys, id: \.self) { key in
-                                    ForEach(motionData) { data in
-                                        LineMark(
-                                            x: .value("Time", data.timestamp),
-                                            y: .value(key, getAttitudeValue(for: key, from: data))
-                                        )
-                                        .foregroundStyle(by: .value("Type", key))
+                        HStack {
+                            VStack {
+                                Chart {
+                                    ForEach(attitudeKeys, id: \.self) { key in
+                                        ForEach(motionData) { data in
+                                            LineMark(
+                                                x: .value("Time", data.timestamp),
+                                                y: .value(key, getAttitudeValue(for: key, from: data))
+                                            )
+                                            .foregroundStyle(by: .value("Type", key))
+                                        }
                                     }
                                 }
-                            }
-                            .chartXAxisLabel("Time")
-                            .chartYAxisLabel("Value")
-                            .frame(height: 200)
-                            .chartYScale(domain: -3...3)
-                            .padding(5)
-                            
-                            Chart {
-                                ForEach(rotationRateKeys, id: \.self) { key in
-                                    ForEach(motionData) { data in
-                                        LineMark(
-                                            x: .value("Time", data.timestamp),
-                                            y: .value(key, getRotationRateValue(for: key, from: data))
-                                        )
-                                        .foregroundStyle(by: .value("Type", key))
+                                .chartXAxisLabel("Time")
+                                .chartYAxisLabel("Value")
+                                .frame(height: 200)
+                                .chartYScale(domain: -3...3)
+                                .padding(5)
+                                
+                                Chart {
+                                    ForEach(rotationRateKeys, id: \.self) { key in
+                                        ForEach(motionData) { data in
+                                            LineMark(
+                                                x: .value("Time", data.timestamp),
+                                                y: .value(key, getRotationRateValue(for: key, from: data))
+                                            )
+                                            .foregroundStyle(by: .value("Type", key))
+                                        }
                                     }
                                 }
+                                .chartXAxisLabel("Time")
+                                .chartYAxisLabel("Value")
+                                .chartYScale(domain: -3...3)
+                                .padding(5)
                             }
-                            .chartXAxisLabel("Time")
-                            .chartYAxisLabel("Value")
-                            .chartYScale(domain: -3...3)
-                            .padding(5)
+                            Spacer()
                         }
-                        Spacer()
-                    }
                 }
                 
                 Spacer()
             }
             .onAppear {
                 self.motionData = motionManager.motionDataArray
+                self.motionManager.startUpdates()
             }
             .onReceive(motionManager.$motionDataArray) { newMotionData in
                 self.motionData = newMotionData
@@ -113,7 +113,7 @@ struct ChartView: View {
             .onDisappear {
                 self.motionManager.stopUpdates()
             }
-        }
+        
     }
     
     func getAttitudeValue(for key: String, from data: MotionData) -> Double {

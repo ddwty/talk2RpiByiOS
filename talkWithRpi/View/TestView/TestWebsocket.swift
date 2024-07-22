@@ -14,7 +14,8 @@ class WebSocketManager2: ObservableObject, WebSocketDelegate {
     @Published var receivedMessage: String = ""
     
     init() {
-        var request = URLRequest(url: URL(string: "ws://192.168.5.11:1234")!)
+//        var request = URLRequest(url: URL(string: "ws://192.168.5.11:1234")!)
+        var request = URLRequest(url: URL(string: "ws://raspberrypi.local:8080/left_finger/forc")!)
         request.timeoutInterval = 5
         socket = WebSocket(request: request)
         socket.delegate = self
