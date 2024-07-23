@@ -1,15 +1,6 @@
 {
-  "originHash" : "8ab402068f8bcb31f9f97d3280d29b2ecb7651d96936d986713b7c71730f9378",
+  "originHash" : "95d26df518f25802c8782300581011b8eafe521f7ab32e3995e57dccf6e16b58",
   "pins" : [
-    {
-      "identity" : "chartview",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/AppPear/ChartView",
-      "state" : {
-        "revision" : "9115a992c91fa19cbb4f2241084240d38654a1fc",
-        "version" : "1.5.5"
-      }
-    },
     {
       "identity" : "starscream",
       "kind" : "remoteSourceControl",

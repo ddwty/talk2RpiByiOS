@@ -11,109 +11,169 @@ import Charts
 import CoreMotion
 
 struct ChartView: View {
-    @StateObject var motionManager = MotionManager3()
-    @State var motionData: [MotionData] = []
-    private let attitudeKeys = ["Pitch", "Yaw", "Roll"]
-    private let rotationRateKeys = ["xRotationRate", "yRotationRate", "zRotationRate"]
+    //    @StateObject var motionManager = MotionManager.shared
+    @EnvironmentObject var motionManager: MotionManager
+    @State var motionData: [MotionData] = []  // 用于Chart显示
     
     @State var showCharts = false
     @State var isReadingData = false
     
+    //    @EnvironmentObject var recordAllDataManager: RecordAllDataModel
+    
     var body: some View {
-            VStack {
-                AttitudeIndicatorView(motionManager: motionManager)
-                
-                HStack {
-                    Spacer()
-                    
-                    Button(action: { self.showCharts.toggle() }) {
-                        if showCharts {
-                            Text("Close Charts")
-                        } else {
-                            Text("Show Charts")
-                        }
-                    }
-                    .buttonStyle(.bordered)
-                    
-                    
-//                    Button(action: {
-//                        if self.isReadingData {
-//                            self.motionManager.stopUpdates()
-//                        } else {
-//                            self.motionManager.startUpdates()
-//                        }
-//                        self.isReadingData.toggle()
-//                    }) {
-//                        if isReadingData {
-//                            Text("Stop")
-//                        } else {
-//                            Text("Start")
-//                        }
-//                    }
-//                    .buttonStyle(.bordered)
-                    
-                    Button(action: { self.motionManager.resetReferenceFrame() }) {
-                        Text("Reset Reference")
-                    }
-                    .buttonStyle(.bordered)
-                    
-                    Toggle("Use High Accuracy", isOn: $motionManager.useHighAccuracy)
-                }
-                .padding()
-                
-                if showCharts {
-                        HStack {
-                            VStack {
-                                Chart {
-                                    ForEach(attitudeKeys, id: \.self) { key in
-                                        ForEach(motionData) { data in
-                                            LineMark(
-                                                x: .value("Time", data.timestamp),
-                                                y: .value(key, getAttitudeValue(for: key, from: data))
-                                            )
-                                            .foregroundStyle(by: .value("Type", key))
-                                        }
-                                    }
-                                }
-                                .chartXAxisLabel("Time")
-                                .chartYAxisLabel("Value")
-                                .frame(height: 200)
-                                .chartYScale(domain: -3...3)
-                                .padding(5)
-                                
-                                Chart {
-                                    ForEach(rotationRateKeys, id: \.self) { key in
-                                        ForEach(motionData) { data in
-                                            LineMark(
-                                                x: .value("Time", data.timestamp),
-                                                y: .value(key, getRotationRateValue(for: key, from: data))
-                                            )
-                                            .foregroundStyle(by: .value("Type", key))
-                                        }
-                                    }
-                                }
-                                .chartXAxisLabel("Time")
-                                .chartYAxisLabel("Value")
-                                .chartYScale(domain: -3...3)
-                                .padding(5)
+        VStack {
+            AttitudeIndicatorView(motionManager: motionManager, showCharts: $showCharts)
+            //                HStack {
+            //                    Spacer()
+            //                    Button(action: { self.showCharts.toggle() }) {
+            //                        if showCharts {
+            //                            Text("Close Charts")
+            //                        } else {
+            //                            Text("Show Charts")
+            //                        }
+            //                    }
+            //                    .buttonStyle(.bordered)
+            
+            
+            //                    Button(action: {
+            //                        if self.isReadingData {
+            //                            self.motionManager.stopUpdates()
+            //                        } else {
+            //                            self.motionManager.startUpdates()
+            //                        }
+            //                        self.isReadingData.toggle()
+            //                    }) {
+            //                        if isReadingData {
+            //                            Text("Stop")
+            //                        } else {
+            //                            Text("Start")
+            //                        }
+            //                    }
+            //                    .buttonStyle(.bordered)
+            
+            //                    Button(action: { self.motionManager.resetReferenceFrame() }) {
+            //                        Text("Reset Reference")
+            //                    }
+            //                    .buttonStyle(.bordered)
+            
+            //                    Toggle("Use High Accuracy", isOn: $motionManager.useHighAccuracy)
+            //                }
+            //                .padding()
+            
+            //                if showCharts {
+            //                    subChartView(motionData: $motionData)
+            //                }
+            
+            //                Spacer()
+        }
+        .sheet(isPresented: $showCharts) {
+            subChartView(motionData: $motionData, showCharts: $showCharts)
+                .environmentObject(motionManager)
+                .interactiveDismissDisabled()
+        }
+        .onAppear {
+            self.motionData = motionManager.motionDataArray
+            self.motionManager.startUpdates()
+        }
+        .onReceive(motionManager.$motionDataArray) { newMotionData in
+            self.motionData = newMotionData
+        }
+        .onDisappear {
+            self.motionManager.stopUpdates()
+        }
+    }
+}
+
+#Preview(traits: .landscapeRight) {
+    ChartView()
+        .previewInterfaceOrientation(.landscapeLeft)
+}
+
+struct subChartView: View {
+    @EnvironmentObject var motionManager: MotionManager
+    @Binding var motionData: [MotionData]
+    @Binding var showCharts: Bool
+    private let attitudeKeys = ["Pitch", "Yaw", "Roll"]
+    private let rotationRateKeys = ["xRotationRate", "yRotationRate", "zRotationRate"]
+    private let accelerationKeys = ["xAcceleration", "yAcceleration", "zAcceleration"]
+    
+    var body: some View {
+        VStack {
+            HStack {
+                GroupBox("Quaternion") {
+                    Chart {
+                        ForEach(attitudeKeys, id: \.self) { key in
+                            ForEach(motionData) { data in
+                                LineMark(
+                                    x: .value("Time", data.timestamp),
+                                    y: .value(key, getAttitudeValue(for: key, from: data))
+                                )
+                                .foregroundStyle(by: .value("Type", key))
                             }
-                            Spacer()
                         }
+                    }
+                    .chartXAxisLabel("Time")
+                    .chartYAxisLabel("Attitude")
+                    .frame(height: 200)
+                    .chartYScale(domain: -3...3)
+                    .padding(5)
                 }
                 
-                Spacer()
+                //                GroupBox("Rotation Rate") {
+                //                    Chart {
+                //                        ForEach(rotationRateKeys, id: \.self) { key in
+                //                            ForEach(motionData) { data in
+                //                                LineMark(
+                //                                    x: .value("Time", data.timestamp),
+                //                                    y: .value(key, getRotationRateValue(for: key, from: data))
+                //                                )
+                //                                .foregroundStyle(by: .value("Type", key))
+                //                            }
+                //                        }
+                //                    }
+                //                    .chartXAxisLabel("Time")
+                //                    .chartYAxisLabel("Rotation Rate")
+                //                    .chartYScale(domain: -5...5)
+                //                    .padding(5)
+                //                }
+                GroupBox("Acceleration") {
+                    Chart {
+                        ForEach(accelerationKeys, id: \.self) { key in
+                            ForEach(motionData) { data in
+                                LineMark(
+                                    x: .value("Time", data.timestamp),
+                                    y: .value(key, getAccelerationValue(for: key, from: data))
+                                )
+                                .foregroundStyle(by: .value("Type", key))
+                            }
+                        }
+                    }
+                    .chartXAxisLabel("Time")
+                    .chartYAxisLabel("Acceleration")
+                    .chartYScale(domain: -5...5)
+                    .padding(5)
+                }
             }
-            .onAppear {
-                self.motionData = motionManager.motionDataArray
-                self.motionManager.startUpdates()
+            .padding(.horizontal)
+            
+            Spacer()
+            
+            Button(action: { self.showCharts = false }) {
+                Text("Close")
+                    .padding()
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .clipShape(Capsule())
             }
-            .onReceive(motionManager.$motionDataArray) { newMotionData in
-                self.motionData = newMotionData
+            .padding(.bottom, 20)
+        }
+        .padding()
+        .background(Color(UIColor.systemBackground).edgesIgnoringSafeArea(.all))
+        .gesture(DragGesture().onEnded {
+            if $0.translation.height > 50 {
+                self.showCharts = false
             }
-            .onDisappear {
-                self.motionManager.stopUpdates()
-            }
-        
+        })
     }
     
     func getAttitudeValue(for key: String, from data: MotionData) -> Double {
@@ -141,9 +201,17 @@ struct ChartView: View {
             return 0
         }
     }
-}
-
-#Preview(traits: .landscapeRight) {
-    ChartView()
-        .previewInterfaceOrientation(.landscapeLeft)
+    
+    func getAccelerationValue(for key: String, from data: MotionData) -> Double {
+        switch key {
+        case "xAcceleration":
+            return data.acceleration.x
+        case "yAcceleration":
+            return data.acceleration.y
+        case "zAcceleration":
+            return data.acceleration.z
+        default:
+            return 0
+        }
+    }
 }

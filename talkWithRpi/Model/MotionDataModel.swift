@@ -52,7 +52,9 @@ struct MotionData: Identifiable {
         self.quaternion = quaternion
     }
 }
-class MotionManager3: ObservableObject {
+class MotionManager: ObservableObject {
+    static let shared = MotionManager()
+        
     private let motionManager = CMMotionManager()
     private var timer: Timer?
     private var startTime: Date?
@@ -64,7 +66,7 @@ class MotionManager3: ObservableObject {
     @Published var useHighAccuracy: Bool = true
     let queue = OperationQueue()
     
-    init() {
+   private init() {
         self.motionData = MotionData(
             timestamp: Date(),
             attitude: MotionData.Attitude(pitch: 0.0, yaw: 0.0, roll: 0.0),
@@ -94,7 +96,7 @@ class MotionManager3: ObservableObject {
     
     func startUpdates() {
         if motionManager.isDeviceMotionAvailable {
-            motionManager.deviceMotionUpdateInterval = 1/100
+            motionManager.deviceMotionUpdateInterval = 1/50
             motionManager.startDeviceMotionUpdates(using: useHighAccuracy ? .xArbitraryCorrectedZVertical : .xArbitraryZVertical, to: queue) { [weak self] data, error in
                 guard let self = self, let data = data else { return }
                 if self.initialAttitude == nil {
@@ -132,7 +134,7 @@ class MotionManager3: ObservableObject {
                         acceleration: data.userAcceleration, rotationMatrix: relativeAttitude.rotationMatrix,
                         quaternion: relativeAttitude.quaternion
                     )
-                    if self.motionDataArray.count > 100 {
+                    if self.motionDataArray.count > 50 {
                         self.motionDataArray.removeFirst()
                     }
                     self.motionDataArray.append(self.motionData)
@@ -145,6 +147,10 @@ class MotionManager3: ObservableObject {
     //        startDeviceMotionUpdates()
     //    }
     
+    func startRecording() {
+        
+    }
+    
     func stopUpdates() {
         motionManager.stopDeviceMotionUpdates()
     }
@@ -155,11 +161,12 @@ class MotionManager3: ObservableObject {
         startUpdates()
     }
     
+    
     func generateTestMotionData() -> [MotionData] {
         var motionDataArray: [MotionData] = []
         let currentTime = Date()
         
-        for i in 0..<100 {
+        for i in 0..<50 {
             let timestamp = currentTime.addingTimeInterval(TimeInterval(i))
             
             let angle = Double(i) * 0.1

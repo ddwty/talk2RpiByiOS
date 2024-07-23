@@ -14,7 +14,7 @@ struct ContentView: View {
 //                .tabItem {
 //                    Label("Via USB", systemImage: "cable.connector")
 //                }
-//            ViaWifiView()
+//            RaspberryPiView()
 //                .tabItem {
 //                    Label("Via wifi", systemImage: "network")
 //                }
@@ -47,15 +47,26 @@ struct ContentView: View {
 //                .tabItem {
 //                    Text("图" )
 //                }
-            PanelView()
+//            ScrollView {
+                PanelView()
+//            }
+            .tabItem {
+                Label("Panel", systemImage: "record.circle" )
+            }
+            SettingView()
                 .tabItem {
-                    Text("Panel" )
+                    Label("Settings",systemImage: "gear")
                 }
-            
+            HistoryView()
+                .tabItem {
+                    Label("History",systemImage: "clock")
+                }
         }
     }
 }
 
-#Preview {
+#Preview(traits: .landscapeRight) {
     ContentView()
+        .environmentObject(MotionManager.shared)
+        .environmentObject(RecordAllDataModel())
 }

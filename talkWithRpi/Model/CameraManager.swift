@@ -10,6 +10,7 @@ import Photos
 
 
 class CameraManager: NSObject, ObservableObject {
+    static let shared = CameraManager()
     var captureSession: AVCaptureSession?
     private var movieOutput: AVCaptureMovieFileOutput?
     private var videoOutputURL: URL?
@@ -20,7 +21,7 @@ class CameraManager: NSObject, ObservableObject {
     
     private var timer: Timer?
     
-    override init() {
+    private override init() {
         super.init()
         prepareSession()
     }

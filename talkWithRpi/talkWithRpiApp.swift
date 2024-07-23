@@ -11,8 +11,9 @@ import SwiftUI
 struct talkWithRpiApp: App {
     var body: some Scene {
         WindowGroup {
-//            ClientView()
             ContentView()
+                .environmentObject(MotionManager.shared)
+                .environmentObject(RecordAllDataModel())
         }
     }
 }

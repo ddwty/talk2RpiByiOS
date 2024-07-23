@@ -9,16 +9,16 @@
 /* Begin PBXBuildFile section */
 		3D13B87B2C47F0EF00004873 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 3D13B87A2C47F0EF00004873 /* Starscream */; };
 		3D13B8872C49088D00004873 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D13B8862C49088D00004873 /* ChartView.swift */; };
-		3D13B88A2C49090800004873 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 3D13B8892C49090800004873 /* SwiftUICharts */; };
 		3D13B8902C4A36A700004873 /* AttitudeIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D13B88F2C4A36A700004873 /* AttitudeIndicatorView.swift */; };
 		3DDFF1F32C4E5469006BD86C /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDFF1F22C4E5469006BD86C /* PanelView.swift */; };
 		3DDFF1F62C4EA11A006BD86C /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDFF1F52C4EA11A006BD86C /* HistoryView.swift */; };
 		3DDFF1F82C4EA5DE006BD86C /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDFF1F72C4EA5DE006BD86C /* SettingView.swift */; };
+		3DDFF2012C4FC494006BD86C /* ControlButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDFF2002C4FC494006BD86C /* ControlButtonView.swift */; };
 		3DF26C182C423DB700FE2A12 /* talkWithRpiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C172C423DB700FE2A12 /* talkWithRpiApp.swift */; };
 		3DF26C1E2C423DB900FE2A12 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DF26C1D2C423DB900FE2A12 /* Assets.xcassets */; };
 		3DF26C212C423DB900FE2A12 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DF26C202C423DB900FE2A12 /* Preview Assets.xcassets */; };
 		3DF26C312C42B52E00FE2A12 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C302C42B52E00FE2A12 /* ContentView.swift */; };
-		3DF26C392C45509800FE2A12 /* ViaWifiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C382C45509800FE2A12 /* ViaWifiView.swift */; };
+		3DF26C392C45509800FE2A12 /* RaspberryPiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF26C382C45509800FE2A12 /* RaspberryPiView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,12 +27,13 @@
 		3DDFF1F22C4E5469006BD86C /* PanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
 		3DDFF1F52C4EA11A006BD86C /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		3DDFF1F72C4EA5DE006BD86C /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		3DDFF2002C4FC494006BD86C /* ControlButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlButtonView.swift; sourceTree = "<group>"; };
 		3DF26C142C423DB700FE2A12 /* talkWithRpi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = talkWithRpi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DF26C172C423DB700FE2A12 /* talkWithRpiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talkWithRpiApp.swift; sourceTree = "<group>"; };
 		3DF26C1D2C423DB900FE2A12 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3DF26C202C423DB900FE2A12 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3DF26C302C42B52E00FE2A12 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		3DF26C382C45509800FE2A12 /* ViaWifiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViaWifiView.swift; sourceTree = "<group>"; };
+		3DF26C382C45509800FE2A12 /* RaspberryPiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaspberryPiView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -51,7 +52,7 @@
 			);
 			target = 3DF26C132C423DB700FE2A12 /* talkWithRpi */;
 		};
-		3DDFF1ED2C4E15C2006BD86C /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		3DDFF20C2C4FD088006BD86C /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				CameraPreviewView.swift,
@@ -63,11 +64,14 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				CameraManager.swift,
-				CameraModel.swift,
+				File.txt,
+				ForceDataModel.swift,
 				MotionDataModel.swift,
-				TCPClient.swift,
-				TCPImgServer.swift,
-				TCPServer.swift,
+				RecordAllDataModel.swift,
+				TestModel/CameraModel.swift,
+				TestModel/TCPClient.swift,
+				TestModel/TCPImgServer.swift,
+				TestModel/TCPServer.swift,
 				WebSocketManager.swift,
 			);
 			target = 3DF26C132C423DB700FE2A12 /* talkWithRpi */;
@@ -76,7 +80,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3D13B8932C4BE8B400004873 /* TestView */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3D13B8942C4BE8C700004873 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = TestView; sourceTree = "<group>"; };
-		3DDFF1EC2C4E15B8006BD86C /* Camera */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3DDFF1ED2C4E15C2006BD86C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Camera; sourceTree = "<group>"; };
+		3DDFF2092C4FD088006BD86C /* Camera */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3DDFF20C2C4FD088006BD86C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Camera; sourceTree = "<group>"; };
 		3DF26C2B2C42A54900FE2A12 /* Model */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3DF26C2C2C42A55300FE2A12 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Model; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -86,7 +90,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D13B87B2C47F0EF00004873 /* Starscream in Frameworks */,
-				3D13B88A2C49090800004873 /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,9 +115,9 @@
 		3DF26C162C423DB700FE2A12 /* talkWithRpi */ = {
 			isa = PBXGroup;
 			children = (
+				3DF26C172C423DB700FE2A12 /* talkWithRpiApp.swift */,
 				3DF26C2D2C42A55800FE2A12 /* View */,
 				3DF26C2B2C42A54900FE2A12 /* Model */,
-				3DF26C172C423DB700FE2A12 /* talkWithRpiApp.swift */,
 				3DF26C1D2C423DB900FE2A12 /* Assets.xcassets */,
 				3DF26C1F2C423DB900FE2A12 /* Preview Content */,
 			);
@@ -132,13 +135,14 @@
 		3DF26C2D2C42A55800FE2A12 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				3DDFF1F22C4E5469006BD86C /* PanelView.swift */,
-				3D13B8932C4BE8B400004873 /* TestView */,
 				3DF26C302C42B52E00FE2A12 /* ContentView.swift */,
-				3DDFF1EC2C4E15B8006BD86C /* Camera */,
-				3DF26C382C45509800FE2A12 /* ViaWifiView.swift */,
+				3DDFF1F22C4E5469006BD86C /* PanelView.swift */,
+				3DDFF2092C4FD088006BD86C /* Camera */,
+				3D13B8932C4BE8B400004873 /* TestView */,
+				3DF26C382C45509800FE2A12 /* RaspberryPiView.swift */,
 				3D13B8862C49088D00004873 /* ChartView.swift */,
 				3D13B88F2C4A36A700004873 /* AttitudeIndicatorView.swift */,
+				3DDFF2002C4FC494006BD86C /* ControlButtonView.swift */,
 				3DDFF1F72C4EA5DE006BD86C /* SettingView.swift */,
 				3DDFF1F52C4EA11A006BD86C /* HistoryView.swift */,
 			);
@@ -163,7 +167,6 @@
 			name = talkWithRpi;
 			packageProductDependencies = (
 				3D13B87A2C47F0EF00004873 /* Starscream */,
-				3D13B8892C49090800004873 /* SwiftUICharts */,
 			);
 			productName = talkWithRpi;
 			productReference = 3DF26C142C423DB700FE2A12 /* talkWithRpi.app */;
@@ -195,7 +198,6 @@
 			mainGroup = 3DF26C0B2C423DB700FE2A12;
 			packageReferences = (
 				3D13B8792C47F0EF00004873 /* XCRemoteSwiftPackageReference "Starscream" */,
-				3D13B8882C49090800004873 /* XCRemoteSwiftPackageReference "ChartView" */,
 			);
 			productRefGroup = 3DF26C152C423DB700FE2A12 /* Products */;
 			projectDirPath = "";
@@ -227,7 +229,8 @@
 				3DDFF1F62C4EA11A006BD86C /* HistoryView.swift in Sources */,
 				3D13B8902C4A36A700004873 /* AttitudeIndicatorView.swift in Sources */,
 				3D13B8872C49088D00004873 /* ChartView.swift in Sources */,
-				3DF26C392C45509800FE2A12 /* ViaWifiView.swift in Sources */,
+				3DDFF2012C4FC494006BD86C /* ControlButtonView.swift in Sources */,
+				3DF26C392C45509800FE2A12 /* RaspberryPiView.swift in Sources */,
 				3DDFF1F82C4EA5DE006BD86C /* SettingView.swift in Sources */,
 				3DDFF1F32C4E5469006BD86C /* PanelView.swift in Sources */,
 				3DF26C182C423DB700FE2A12 /* talkWithRpiApp.swift in Sources */,
@@ -464,14 +467,6 @@
 				minimumVersion = 4.0.8;
 			};
 		};
-		3D13B8882C49090800004873 /* XCRemoteSwiftPackageReference "ChartView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AppPear/ChartView";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.5.5;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -479,11 +474,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3D13B8792C47F0EF00004873 /* XCRemoteSwiftPackageReference "Starscream" */;
 			productName = Starscream;
-		};
-		3D13B8892C49090800004873 /* SwiftUICharts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3D13B8882C49090800004873 /* XCRemoteSwiftPackageReference "ChartView" */;
-			productName = SwiftUICharts;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

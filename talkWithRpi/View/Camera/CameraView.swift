@@ -10,25 +10,25 @@ import AVFoundation
 import Photos
 
 struct CameraView: View {
-    @StateObject private var cameraManager = CameraManager()
+    @StateObject private var cameraManager = CameraManager.shared
         var body: some View {
             VStack {
                 Text("Recording: \(Int(cameraManager.recordingDuration)) seconds")
                     .font(.headline)
 //                    .padding()
-                Button(action: {
-                        if cameraManager.isRecording {
-                            cameraManager.stopRecording()
-                        } else {
-                            cameraManager.startRecording()
-                        }
-                }) {
-                    Text(cameraManager.isRecording ? "Stop Recording" : "Start Recording")
-                        .padding()
-                        .background(cameraManager.isRecording ? Color.red : Color.green)
-                        .foregroundColor(.white)
-                        .clipShape(Capsule())
-                }
+//                Button(action: {
+//                        if cameraManager.isRecording {
+//                            cameraManager.stopRecording()
+//                        } else {
+//                            cameraManager.startRecording()
+//                        }
+//                }) {
+//                    Text(cameraManager.isRecording ? "Stop Recording" : "Start Recording")
+//                        .padding()
+//                        .background(cameraManager.isRecording ? Color.red : Color.green)
+//                        .foregroundColor(.white)
+//                        .clipShape(Capsule())
+//                }
 //                .padding()
                 
                 
@@ -55,4 +55,6 @@ struct CameraView: View {
 
 #Preview(traits: .landscapeRight) {
     CameraView()
+        .environmentObject(RecordAllDataModel())
+        .environmentObject(MotionManager.shared)
 }

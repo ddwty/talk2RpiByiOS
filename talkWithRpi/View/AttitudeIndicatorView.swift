@@ -7,7 +7,8 @@
 import SwiftUI
 
 struct AttitudeIndicatorView: View {
-    @ObservedObject var motionManager: MotionManager3
+    @ObservedObject var motionManager: MotionManager
+    @Binding var showCharts: Bool
     let textWidth = CGFloat(50)
     
     var body: some View {
@@ -37,6 +38,9 @@ struct AttitudeIndicatorView: View {
             .frame(width: 250)
             .background(Color(UIColor.systemGray6))
             .cornerRadius(15)
+            .onTapGesture {
+                showCharts.toggle()
+            }
             
             Spacer()
             AttitudeVisualizer(
@@ -73,6 +77,9 @@ struct AttitudeIndicatorView: View {
             .frame(width: 250)
             .background(Color(UIColor.systemGray6))
             .cornerRadius(15)
+            .onTapGesture {
+                showCharts.toggle()
+            }
             
         } //:HStcak
         .padding()
@@ -161,7 +168,7 @@ struct AttitudeVisualizer: View {
 }
 
 #Preview(traits: .landscapeRight) {
-    AttitudeIndicatorView(motionManager: MotionManager3())
+    AttitudeIndicatorView(motionManager:  MotionManager.shared, showCharts: .constant(false))
 }
 
 
