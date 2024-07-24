@@ -30,7 +30,7 @@ struct FingerFource: Codable {
 
 class WebSocketManager: ObservableObject {
     static let shared = WebSocketManager()
-    @Published var forceData: [ForceData] = []
+    @Published var recordedForceData: [ForceData] = []  //用于储存
     @Published var imuData: ImuData?
     @Published var time: TimeStamp?
     //    @Published var connected = false {
@@ -62,7 +62,9 @@ class WebSocketManager: ObservableObject {
         
         //        pingServer()
         
-        startPingTimer()
+//        startPingTimer()
+        connectToServer()
+        connectLeftFinger()
         
         //        var request = URLRequest(url: URL(string: "ws://\(self.hostName)")!)
         //        request.timeoutInterval = 5
@@ -94,6 +96,14 @@ class WebSocketManager: ObservableObject {
             }
         }.resume()
     }
+    
+    func connectToServer() {
+        startPingTimer()
+        if self.connected {
+            connectLeftFinger()
+        }
+    }
+    
     func reConnectToServer() {
         shouldPing = true
         pingServer()
@@ -114,49 +124,29 @@ class WebSocketManager: ObservableObject {
         leftFingerSocket?.connect()
     }
     
-    //    func recordForceData(fingerForce: FingerForce) {
-    //        guard let force = fingerForce.force, force.count == 6 else {
-    //            return
-    //        }
-    //
-    //        let forceData = ForceData(
-    //            timeStamp: "\(fingerForce.time_stamp.secs).\(fingerForce.time_stamp.nanos)",
-    //            forceX: force[0],
-    //            forceY: force[1],
-    //            forceZ: force[2],
-    //            torqueX: force[3],
-    //            torqueY: force[4],
-    //            torqueZ: force[5]
-    //        )
-    //        self.forceData.append(forceData)
-    //    }
-    
     func startRecordingForceData() {
-        forceData.removeAll()
+        recordedForceData.removeAll()
+        recordedForceData.reserveCapacity(10000)
+        isRecording = true
         connectLeftFinger()
     }
     
-    func handleMessage(string: String, client: WebSocketClient) {
+    func stopRecordingForceData() {
+        isRecording = false
+    }
+    
+    func handleLeftFingerMessage(string: String, client: WebSocketClient) {
         if client === leftFingerSocket {
             if let data = string.data(using: .utf8) {
                 if let fingerForce = try? JSONDecoder().decode(FingerFource.self, from: data) {
-//                    let forceData = ForceData(
-//                        timeStamp: "\(fingerForce.time_stamp.secs).\(fingerForce.time_stamp.nanos)",
-//                        forceX: fingerForce.force?[0] ?? nil,
-//                        forceY: fingerForce.force?[1] ?? nil,
-//                        forceZ: fingerForce.force?[2] ?? nil,
-//                        torqueX: fingerForce.force?[3] ?? nil,
-//                        torqueY: fingerForce.force?[4] ?? nil,
-//                        torqueZ: fingerForce.force?[5] ?? nil
-//                    )
                     let forceData = ForceData(
                         timeStamp: "\(fingerForce.time_stamp.secs).\(fingerForce.time_stamp.nanos)",
                         forceData: fingerForce.force?.value)
-//                    print("force data1: \(forceData)")
+//                    print("force data1: \(recordedForceData)")
                     DispatchQueue.main.async {
-//                        print("force data1: \(forceData)")
+//                        print("force data1: \(recordedForceData)")
                         if self.isRecording {
-                            self.forceData.append(forceData)
+                            self.recordedForceData.append(forceData)
                         }
                     }
                 }
@@ -179,11 +169,14 @@ extension WebSocketManager: WebSocketDelegate {
             }
             print("WebSocket disconnected: \(reason) with code: \(code)")
         case .text(let string):
-            handleMessage(string: string, client: client)
-//            print("Received text: \(string)")
-            DispatchQueue.main.async {
-                self.receivedMessage = string
+            if self.isRecording {
+                handleLeftFingerMessage(string: string, client: client)
+                print("handle finger message, is recording: \(isRecording)")
             }
+//            print("Received text: \(string)")
+//            DispatchQueue.main.async {
+//                self.receivedMessage = string
+//            }
         case .binary(let data):
             handleData(data: data, client: client)
         case .ping(_):
@@ -209,35 +202,6 @@ extension WebSocketManager: WebSocketDelegate {
         }
     }
     
-    //    private func handleMessage(string: String, client: Starscream.WebSocketClient) {
-    //        if client === imuSocket {
-    //            if let data = string.data(using: .utf8) {
-    //                let imuData = try? JSONDecoder().decode(ImuData.self, from: data)
-    //                DispatchQueue.main.async {
-    //                    self.imuData = imuData
-    //                }
-    //            }
-    //        } else if client === videoSocket {
-    //            if string == "blocked" {
-    //                print("Video blocked")
-    //            } else {
-    //                if let data = string.data(using: .utf8) {
-    //                    let timeStamp = try? JSONDecoder().decode(TimeStamp.self, from: data)
-    //                    DispatchQueue.main.async {
-    //                        self.time = timeStamp
-    //                    }
-    //                }
-    //            }
-    //        }
-    //        else if client === leftFingerSocket {
-    //            if let data = string.data(using: .utf8) {
-    //                let forceData = try? JSONDecoder().decode(FingerForce.self, from: data)
-    //                DispatchQueue.main.async {
-    //                    self.forceData = forceData
-    //                }
-    //            }
-    //        }
-    //    }
     
     private func handleData(data: Data, client: Starscream.WebSocketClient) {
         if client === videoSocket {

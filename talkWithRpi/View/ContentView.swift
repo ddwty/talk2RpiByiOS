@@ -69,4 +69,6 @@ struct ContentView: View {
     ContentView()
         .environmentObject(MotionManager.shared)
         .environmentObject(RecordAllDataModel())
+        .environmentObject(CameraManager.shared)
+        .environmentObject(WebSocketManager.shared)
 }

@@ -1,1 +1,0 @@
-"\(fingerForce.time_stamp.secs).\(fingerForce.time_stamp.nanos)"

@@ -10,13 +10,25 @@ import Combine
 import Starscream
 
 struct RaspberryPiView: View {
-    @ObservedObject var webSocketManager = WebSocketManager.shared
+//    @ObservedObject var webSocketManager = WebSocketManager.shared
+    @EnvironmentObject var webSocketManager: WebSocketManager
     @State private var message: String = ""
         var body: some View {
             VStack {
-                Label(webSocketManager.connected ? "Connected" : "Disconnected", systemImage: webSocketManager.connected ? "checkmark.circle" : "xmark.circle")
-                    .font(.title)
-                    .foregroundColor(webSocketManager.connected ? .green : .red)
+                if webSocketManager.connected {
+                    Label("Connected", systemImage: "checkmark.circle")
+                        .font(.title)
+                        .foregroundColor(.green)
+                        .symbolEffect(.bounce, value: webSocketManager.connected)
+                } else {
+                    Label("Disconnected", systemImage: "wifi.router")
+                        .foregroundColor(.red)
+                        .font(.title)
+                        .symbolEffect(.variableColor.iterative.reversing)
+                }
+//                Label(webSocketManager.connected ? "Connected" : "Disconnected", systemImage: webSocketManager.connected ? "checkmark.circle" : "xmark.circle")
+//                    .font(.title)
+//                    .foregroundColor(webSocketManager.connected ? .green : .red)
                 //                Button(action: {webSocketManager.connect()}) {
 //                HStack{
 //                    Button(action: {
@@ -61,5 +73,6 @@ struct FilledButtonStyle: ButtonStyle {
 struct ViaWifiView_Previews: PreviewProvider {
     static var previews: some View {
         RaspberryPiView()
+            .environmentObject(WebSocketManager.shared)
     }
 }

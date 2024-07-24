@@ -80,13 +80,17 @@ class CameraManager: NSObject, ObservableObject {
     func startRecording() {
         guard !isRecording else { return }
         
-        // 确保会话已经准备好
+        
         if captureSession == nil || !(captureSession?.isRunning ?? false) {
             prepareSession()
         }
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd_HHmmss"
+        let dateString = dateFormatter.string(from: Date())
+        
         let tempDirectory = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-        videoOutputURL = tempDirectory.appendingPathComponent(UUID().uuidString).appendingPathExtension("mov")
+        videoOutputURL = tempDirectory.appendingPathComponent(dateString).appendingPathExtension("mp4")
         
         if let videoOutputURL = videoOutputURL {
             movieOutput?.startRecording(to: videoOutputURL, recordingDelegate: self)

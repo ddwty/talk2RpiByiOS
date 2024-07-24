@@ -18,53 +18,14 @@ struct ChartView: View {
     @State var showCharts = false
     @State var isReadingData = false
     
+    let width: CGFloat
+    let height: CGFloat
+    
     //    @EnvironmentObject var recordAllDataManager: RecordAllDataModel
     
     var body: some View {
         VStack {
-            AttitudeIndicatorView(motionManager: motionManager, showCharts: $showCharts)
-            //                HStack {
-            //                    Spacer()
-            //                    Button(action: { self.showCharts.toggle() }) {
-            //                        if showCharts {
-            //                            Text("Close Charts")
-            //                        } else {
-            //                            Text("Show Charts")
-            //                        }
-            //                    }
-            //                    .buttonStyle(.bordered)
-            
-            
-            //                    Button(action: {
-            //                        if self.isReadingData {
-            //                            self.motionManager.stopUpdates()
-            //                        } else {
-            //                            self.motionManager.startUpdates()
-            //                        }
-            //                        self.isReadingData.toggle()
-            //                    }) {
-            //                        if isReadingData {
-            //                            Text("Stop")
-            //                        } else {
-            //                            Text("Start")
-            //                        }
-            //                    }
-            //                    .buttonStyle(.bordered)
-            
-            //                    Button(action: { self.motionManager.resetReferenceFrame() }) {
-            //                        Text("Reset Reference")
-            //                    }
-            //                    .buttonStyle(.bordered)
-            
-            //                    Toggle("Use High Accuracy", isOn: $motionManager.useHighAccuracy)
-            //                }
-            //                .padding()
-            
-            //                if showCharts {
-            //                    subChartView(motionData: $motionData)
-            //                }
-            
-            //                Spacer()
+            AttitudeIndicatorView(motionManager: motionManager, showCharts: $showCharts, width: self.width, height: self.height)
         }
         .sheet(isPresented: $showCharts) {
             subChartView(motionData: $motionData, showCharts: $showCharts)
@@ -84,10 +45,7 @@ struct ChartView: View {
     }
 }
 
-#Preview(traits: .landscapeRight) {
-    ChartView()
-        .previewInterfaceOrientation(.landscapeLeft)
-}
+
 
 struct subChartView: View {
     @EnvironmentObject var motionManager: MotionManager
@@ -96,6 +54,18 @@ struct subChartView: View {
     private let attitudeKeys = ["Pitch", "Yaw", "Roll"]
     private let rotationRateKeys = ["xRotationRate", "yRotationRate", "zRotationRate"]
     private let accelerationKeys = ["xAcceleration", "yAcceleration", "zAcceleration"]
+    
+    private let colors: [String: Color] = [
+            "Pitch": .red,
+            "Yaw": .green,
+            "Roll": .blue,
+            "xRotationRate": .red,
+            "yRotationRate": .green,
+            "zRotationRate": .blue,
+            "xAcceleration": .red,
+            "yAcceleration": .green,
+            "zAcceleration": .blue
+        ]
     
     var body: some View {
         VStack {
@@ -109,6 +79,7 @@ struct subChartView: View {
                                     y: .value(key, getAttitudeValue(for: key, from: data))
                                 )
                                 .foregroundStyle(by: .value("Type", key))
+                              .foregroundStyle(colors[key] ?? .black)
                             }
                         }
                     }
@@ -118,6 +89,7 @@ struct subChartView: View {
                     .chartYScale(domain: -3...3)
                     .padding(5)
                 }
+                
                 
                 //                GroupBox("Rotation Rate") {
                 //                    Chart {
@@ -145,23 +117,24 @@ struct subChartView: View {
                                     y: .value(key, getAccelerationValue(for: key, from: data))
                                 )
                                 .foregroundStyle(by: .value("Type", key))
+                                .foregroundStyle(colors[key] ?? .black)
                             }
                         }
                     }
                     .chartXAxisLabel("Time")
                     .chartYAxisLabel("Acceleration")
-                    .chartYScale(domain: -5...5)
+                    .chartYScale(domain: -1...1)
                     .padding(5)
                 }
             }
-            .padding(.horizontal)
+//            .padding(.horizontal)
+            .padding()
             
-            Spacer()
             
             Button(action: { self.showCharts = false }) {
-                Text("Close")
+                Label("Close", systemImage: "xmark")
                     .padding()
-                    .background(Color.red)
+                    .background(Color.blue)
                     .foregroundColor(.white)
                     .clipShape(Capsule())
             }
@@ -214,4 +187,12 @@ struct subChartView: View {
             return 0
         }
     }
+}
+
+#Preview(traits: .landscapeRight) {
+    ChartView(width: 200, height: 100)
+        .previewInterfaceOrientation(.landscapeLeft)
+        .environmentObject(RecordAllDataModel())
+        .environmentObject(MotionManager.shared)
+        .environmentObject(CameraManager.shared)
 }

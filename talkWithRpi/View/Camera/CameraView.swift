@@ -10,35 +10,21 @@ import AVFoundation
 import Photos
 
 struct CameraView: View {
-    @StateObject private var cameraManager = CameraManager.shared
+//    @StateObject private var cameraManager = CameraManager.shared
+    let scale = 0.15
+    let width, height: Double
+    @EnvironmentObject var cameraManager: CameraManager
         var body: some View {
             VStack {
-                Text("Recording: \(Int(cameraManager.recordingDuration)) seconds")
-                    .font(.headline)
-//                    .padding()
-//                Button(action: {
-//                        if cameraManager.isRecording {
-//                            cameraManager.stopRecording()
-//                        } else {
-//                            cameraManager.startRecording()
-//                        }
-//                }) {
-//                    Text(cameraManager.isRecording ? "Stop Recording" : "Start Recording")
-//                        .padding()
-//                        .background(cameraManager.isRecording ? Color.red : Color.green)
-//                        .foregroundColor(.white)
-//                        .clipShape(Capsule())
-//                }
-//                .padding()
-                
-                
                 if let session = cameraManager.captureSession {
                     CameraPreviewView(session: session)
                         .frame(width: UIScreen.main.bounds.width * 0.1 * 4 / 3, height: UIScreen.main.bounds.width * 0.1)
+//                        .frame(width: width * 4 / 3 * scale, height: height * scale)
                                     .cornerRadius(8)
 //                                    .padding()
                 }
             }
+//            .border(.green)
             .onAppear {
                 PHPhotoLibrary.requestAuthorization { status in
                     if status != .authorized {
@@ -54,7 +40,8 @@ struct CameraView: View {
 
 
 #Preview(traits: .landscapeRight) {
-    CameraView()
+    CameraView(width: 200, height: 100)
         .environmentObject(RecordAllDataModel())
         .environmentObject(MotionManager.shared)
+        .environmentObject(CameraManager.shared)
 }

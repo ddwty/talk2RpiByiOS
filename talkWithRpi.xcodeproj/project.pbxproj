@@ -10,6 +10,8 @@
 		3D13B87B2C47F0EF00004873 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 3D13B87A2C47F0EF00004873 /* Starscream */; };
 		3D13B8872C49088D00004873 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D13B8862C49088D00004873 /* ChartView.swift */; };
 		3D13B8902C4A36A700004873 /* AttitudeIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D13B88F2C4A36A700004873 /* AttitudeIndicatorView.swift */; };
+		3D5354A52C50F30B00D84609 /* StopWach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5354A42C50F30B00D84609 /* StopWach.swift */; };
+		3DAEC7462C51306C00056851 /* ForceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAEC7452C51306C00056851 /* ForceView.swift */; };
 		3DDFF1F32C4E5469006BD86C /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDFF1F22C4E5469006BD86C /* PanelView.swift */; };
 		3DDFF1F62C4EA11A006BD86C /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDFF1F52C4EA11A006BD86C /* HistoryView.swift */; };
 		3DDFF1F82C4EA5DE006BD86C /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDFF1F72C4EA5DE006BD86C /* SettingView.swift */; };
@@ -24,6 +26,8 @@
 /* Begin PBXFileReference section */
 		3D13B8862C49088D00004873 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		3D13B88F2C4A36A700004873 /* AttitudeIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttitudeIndicatorView.swift; sourceTree = "<group>"; };
+		3D5354A42C50F30B00D84609 /* StopWach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWach.swift; sourceTree = "<group>"; };
+		3DAEC7452C51306C00056851 /* ForceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceView.swift; sourceTree = "<group>"; };
 		3DDFF1F22C4E5469006BD86C /* PanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
 		3DDFF1F52C4EA11A006BD86C /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		3DDFF1F72C4EA5DE006BD86C /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -64,7 +68,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				CameraManager.swift,
-				File.txt,
 				ForceDataModel.swift,
 				MotionDataModel.swift,
 				RecordAllDataModel.swift,
@@ -144,7 +147,9 @@
 				3D13B88F2C4A36A700004873 /* AttitudeIndicatorView.swift */,
 				3DDFF2002C4FC494006BD86C /* ControlButtonView.swift */,
 				3DDFF1F72C4EA5DE006BD86C /* SettingView.swift */,
+				3D5354A42C50F30B00D84609 /* StopWach.swift */,
 				3DDFF1F52C4EA11A006BD86C /* HistoryView.swift */,
+				3DAEC7452C51306C00056851 /* ForceView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -225,11 +230,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D5354A52C50F30B00D84609 /* StopWach.swift in Sources */,
 				3DF26C312C42B52E00FE2A12 /* ContentView.swift in Sources */,
 				3DDFF1F62C4EA11A006BD86C /* HistoryView.swift in Sources */,
 				3D13B8902C4A36A700004873 /* AttitudeIndicatorView.swift in Sources */,
 				3D13B8872C49088D00004873 /* ChartView.swift in Sources */,
 				3DDFF2012C4FC494006BD86C /* ControlButtonView.swift in Sources */,
+				3DAEC7462C51306C00056851 /* ForceView.swift in Sources */,
 				3DF26C392C45509800FE2A12 /* RaspberryPiView.swift in Sources */,
 				3DDFF1F82C4EA5DE006BD86C /* SettingView.swift in Sources */,
 				3DDFF1F32C4E5469006BD86C /* PanelView.swift in Sources */,
@@ -371,10 +378,11 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = talkWithRpi/Info.plist;
-				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Access camera";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Use Micrephone";
 				INFOPLIST_KEY_NSMotionUsageDescription = "This app requires access to the accelerometer";
+				INFOPLIST_KEY_NSNetworkVolumesUsageDescription = "Use network";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Save Photo";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -409,10 +417,11 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = talkWithRpi/Info.plist;
-				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Access camera";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Use Micrephone";
 				INFOPLIST_KEY_NSMotionUsageDescription = "This app requires access to the accelerometer";
+				INFOPLIST_KEY_NSNetworkVolumesUsageDescription = "Use network";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Save Photo";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

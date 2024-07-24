@@ -62,8 +62,11 @@ class MotionManager: ObservableObject {
     private var initialAttitude: CMAttitude?
     
     @Published var motionData: MotionData
-    @Published var motionDataArray: [MotionData] = []
+    @Published var motionDataArray: [MotionData] = [] // 用于可视化
+    @Published var recordedMotionData: [MotionData] = [] //用于储存
     @Published var useHighAccuracy: Bool = true
+    @Published var isRecording = false
+    
     let queue = OperationQueue()
     
    private init() {
@@ -148,7 +151,14 @@ class MotionManager: ObservableObject {
     //    }
     
     func startRecording() {
+        recordedMotionData.removeAll()
+        recordedMotionData.reserveCapacity(10000)
+        isRecording = true
         
+    }
+    
+    func stopRecording() {
+        isRecording = false
     }
     
     func stopUpdates() {
