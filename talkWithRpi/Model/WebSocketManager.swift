@@ -55,16 +55,10 @@ class WebSocketManager: ObservableObject {
     private var shouldPing: Bool = true
     
     
-    
-    
-    //    private var socket: WebSocket?
     private init() {
-        
-        //        pingServer()
-        
-//        startPingTimer()
         connectToServer()
         connectLeftFinger()
+        self.recordedForceData.reserveCapacity(10000)
         
         //        var request = URLRequest(url: URL(string: "ws://\(self.hostName)")!)
         //        request.timeoutInterval = 5
@@ -120,13 +114,44 @@ class WebSocketManager: ObservableObject {
     func connectLeftFinger() {
         let fingerRequest = URLRequest(url: URL(string: "ws://\(self.hostName):8080/left_finger/force")!)
         leftFingerSocket = WebSocket(request: fingerRequest)
-        leftFingerSocket?.delegate = self
+        leftFingerSocket?.onEvent = { event in
+                    switch event {
+                    case .connected(let headers):
+                        self.connected = true
+                        print("WebSocket connected with headers: \(headers)")
+                    case .disconnected(let reason, let code):
+                        self.connected = false
+                        print("WebSocket disconnected: \(reason) with code: \(code)")
+                    case .text(let string):
+                        if self.isRecording {
+                            self.handleLeftFingerMessage(string: string)
+                            print("handle finger message, is recording: \(self.isRecording)")
+                        }
+                    case .binary(let data):
+                        print("Received data: \(data.count)")
+                    case .ping(_):
+                        break
+                    case .pong(_):
+                        break
+                    case .viabilityChanged(_):
+                        break
+                    case .reconnectSuggested(_):
+                        break
+                    case .cancelled:
+                        self.connected = false
+                        print("WebSocket is cancelled")
+                    case .peerClosed:
+                        break
+                    case .error(let error):
+                        self.connected = false
+                        print("WebSocket encountered an error: \(error?.localizedDescription ?? "")")
+                    }
+                }
         leftFingerSocket?.connect()
     }
     
     func startRecordingForceData() {
         recordedForceData.removeAll()
-        recordedForceData.reserveCapacity(10000)
         isRecording = true
         connectLeftFinger()
     }
@@ -135,8 +160,8 @@ class WebSocketManager: ObservableObject {
         isRecording = false
     }
     
-    func handleLeftFingerMessage(string: String, client: WebSocketClient) {
-        if client === leftFingerSocket {
+    
+    func handleLeftFingerMessage(string: String) {
             if let data = string.data(using: .utf8) {
                 if let fingerForce = try? JSONDecoder().decode(FingerFource.self, from: data) {
                     let forceData = ForceData(
@@ -151,69 +176,7 @@ class WebSocketManager: ObservableObject {
                     }
                 }
             }
-        }
+        
     }
 }
 
-extension WebSocketManager: WebSocketDelegate {
-    func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
-        switch event {
-        case .connected(let headers):
-            DispatchQueue.main.async {
-                self.connected = true
-            }
-            print("WebSocket connected with headers: \(headers)")
-        case .disconnected(let reason, let code):
-            DispatchQueue.main.async {
-                self.connected = false
-            }
-            print("WebSocket disconnected: \(reason) with code: \(code)")
-        case .text(let string):
-            if self.isRecording {
-                handleLeftFingerMessage(string: string, client: client)
-                print("handle finger message, is recording: \(isRecording)")
-            }
-//            print("Received text: \(string)")
-//            DispatchQueue.main.async {
-//                self.receivedMessage = string
-//            }
-        case .binary(let data):
-            handleData(data: data, client: client)
-        case .ping(_):
-            break
-        case .pong(_):
-            break
-        case .viabilityChanged(_):
-            break
-        case .reconnectSuggested(_):
-            break
-        case .cancelled:
-            DispatchQueue.main.async {
-                self.connected = false
-            }
-            print("websocket is cancelled")
-        case .peerClosed:
-            break
-        case .error(let error):
-            DispatchQueue.main.async {
-                self.connected = false
-            }
-            print("websocket encountered an error: \(error?.localizedDescription ?? "")")
-        }
-    }
-    
-    
-    private func handleData(data: Data, client: Starscream.WebSocketClient) {
-        if client === videoSocket {
-            if let image = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    self.image = image
-                }
-            }
-        }
-    }
-    
-    
-    
-    
-}

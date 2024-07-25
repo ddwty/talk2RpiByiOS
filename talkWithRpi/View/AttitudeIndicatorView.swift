@@ -72,19 +72,18 @@ struct AttitudeIndicatorView: View {
             
             VStack {
                 Spacer()
-                Text("Acceleration")
+                Text("Acceleration (0.1/g)")
                     .font(.headline)
-                
                 Divider()
                 //                        GeometryReader { geometry in
                 HStack(spacing: 0) {
-                    Text("x:\(motionManager.motionData.acceleration.x, specifier: "%.1f")")
+                    Text("x:\(motionManager.motionData.acceleration.x * 10, specifier: "%.1f")")
                         .foregroundStyle(.red)
                     Spacer()
-                    Text("y:\(motionManager.motionData.acceleration.y, specifier: "%.1f")")
+                    Text("y:\(motionManager.motionData.acceleration.y * 10, specifier: "%.1f")")
                         .foregroundStyle(.green)
                     Spacer()
-                    Text("z:\(motionManager.motionData.acceleration.z, specifier: "%.1f")")
+                    Text("z:\(motionManager.motionData.acceleration.z * 10, specifier: "%.1f")")
                         .foregroundStyle(.blue)
                     
                     //                            }

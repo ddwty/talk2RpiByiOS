@@ -61,6 +61,10 @@ struct ContentView: View {
                 .tabItem {
                     Label("History",systemImage: "clock")
                 }
+            MyARView()
+                .tabItem {
+                    Label("AR",systemImage: "clock")
+                }
         }
     }
 }
@@ -69,6 +73,7 @@ struct ContentView: View {
     ContentView()
         .environmentObject(MotionManager.shared)
         .environmentObject(RecordAllDataModel())
-        .environmentObject(CameraManager.shared)
+//        .environmentObject(CameraManager.shared)
         .environmentObject(WebSocketManager.shared)
+        .environmentObject(ARRecorder.shared)
 }

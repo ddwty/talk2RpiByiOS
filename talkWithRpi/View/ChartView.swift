@@ -194,5 +194,5 @@ struct subChartView: View {
         .previewInterfaceOrientation(.landscapeLeft)
         .environmentObject(RecordAllDataModel())
         .environmentObject(MotionManager.shared)
-        .environmentObject(CameraManager.shared)
+//        .environmentObject(CameraManager.shared)
 }

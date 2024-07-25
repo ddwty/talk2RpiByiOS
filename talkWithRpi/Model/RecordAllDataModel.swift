@@ -9,10 +9,14 @@ import Foundation
 import SwiftUI
 
 class RecordAllDataModel: ObservableObject {
-    @Published var isRecording = false
+    private var isRecording = false
+    //    @EnvironmentObject var arRecorder: ARRecorder
+    
     private let motionManager = MotionManager.shared
-    private let cameraManager = CameraManager.shared
+    //    private let cameraManager = CameraManager.shared
     private let webSocketManager = WebSocketManager.shared
+    private let arRecorder = ARRecorder.shared
+    
     
     private var timer: Timer?
     private var recordingStartTime: Date?
@@ -23,41 +27,57 @@ class RecordAllDataModel: ObservableObject {
     
     
     func startRecordingData() {
-            guard !isRecording else { return }
+        guard !isRecording else { return }
         
-            recordedMotionData.removeAll()
-            recordedForceData.removeAll()
-            print("Start recording")
-//            motionManager.startUpdates()
-            cameraManager.startRecording()
-            webSocketManager.startRecordingForceData()
-            webSocketManager.isRecording = true
-
-        recordingStartTime  = Date()
-            isRecording = true
-        startTimer()
+        recordedMotionData.removeAll()
+        recordedForceData.removeAll()
+        print("Start recording")
+        //            cameraManager.startRecording()
+        webSocketManager.startRecordingForceData()
+        arRecorder.startRecording { success in
+            DispatchQueue.main.async {
+                if success {
+                    self.recordingStartTime = Date()
+                    self.isRecording = true
+                    self.startTimer()
+                } else {
+                    print("Failed to start AR recording")
+                }
+            }
+        }
+        webSocketManager.isRecording = true
+        isRecording = true
         print(recordedForceData.capacity)
     }
-
-        func stopRecordingData() {
-            guard isRecording else { return }
-
-//            motionManager.stopUpdates()
-            cameraManager.stopRecording()
-            webSocketManager.stopRecordingForceData()
-            motionManager.stopRecording()
-
-            recordedMotionData = motionManager.motionDataArray
-            recordedForceData = webSocketManager.recordedForceData
-            print("Recorded force data length: \(recordedForceData.count)")
-            print("Force data:\(recordedForceData)")
-            print("Force data:\(webSocketManager.recordedForceData)")
-
-            isRecording = false
-            
-            stopTimer()
-            print(recordedForceData.capacity)
+    
+    func stopRecordingData() {
+        guard isRecording else { return }
+        
+        //            motionManager.stopUpdates()
+        //            cameraManager.stopRecording()
+        webSocketManager.stopRecordingForceData()
+        motionManager.stopRecording()
+        arRecorder.stopRecording { url in
+                    DispatchQueue.main.async {
+                        if let url = url {
+                            print("Video saved to: \(url.absoluteString)")
+                        } else {
+                            print("Failed to save video")
+                        }
+                    }
         }
+        
+        recordedMotionData = motionManager.motionDataArray
+        recordedForceData = webSocketManager.recordedForceData
+        print("Recorded force data length: \(recordedForceData.count)")
+        print("Force data:\(recordedForceData)")
+        print("Force data:\(webSocketManager.recordedForceData)")
+        
+        isRecording = false
+        
+        stopTimer()
+        print(recordedForceData.capacity)
+    }
 }
 
 extension RecordAllDataModel {
@@ -75,10 +95,10 @@ extension RecordAllDataModel {
     
     // mm:ss:ms
     func formattedDuration() -> String {
-            let minutes = Int(recordingDuration) / 60
-            let seconds = Int(recordingDuration) % 60
-            let milliseconds = Int((recordingDuration - TimeInterval(minutes * 60 + seconds)) * 1000)
-            return String(format: "%02d:%02d:%2d", minutes, seconds, milliseconds)
-        }
+        let minutes = Int(recordingDuration) / 60
+        let seconds = Int(recordingDuration) % 60
+        let milliseconds = Int((recordingDuration - TimeInterval(minutes * 60 + seconds)) * 1000)
+        return String(format: "%02d:%02d:%2d", minutes, seconds, milliseconds)
+    }
     
 }

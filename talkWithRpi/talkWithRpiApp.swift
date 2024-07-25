@@ -9,13 +9,15 @@ import SwiftUI
 
 @main
 struct talkWithRpiApp: App {
+    @StateObject private var recordAllDataModel = RecordAllDataModel()
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(MotionManager.shared)
-                .environmentObject(RecordAllDataModel())
-                .environmentObject(CameraManager.shared)
+                .environmentObject(recordAllDataModel)
+//                .environmentObject(CameraManager.shared)
                 .environmentObject(WebSocketManager.shared)
+                .environmentObject(ARRecorder.shared)
         }
     }
 }

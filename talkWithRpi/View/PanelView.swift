@@ -30,9 +30,14 @@ struct PanelView: View {
                 ControlButtonView()
                 
                 HStack {
-                    CameraView(width: geometry.size.width, height: geometry.size.height)
-                        .offset(y: -50)
+//                    CameraView(width: geometry.size.width, height: geometry.size.height)
+//                        .offset(y: -50)
+                    MyARView()
+                        .frame(width: 200, height: 150)
+                        .offset(y: -150)
                     Spacer()
+//                    MyARView()
+//                        .frame(width: 200, height: 100)
                     
                 }
                 
@@ -65,7 +70,7 @@ struct PanelView: View {
     PanelView()
         .environmentObject(RecordAllDataModel())
         .environmentObject(MotionManager.shared)
-        .environmentObject(CameraManager.shared)
+//        .environmentObject(CameraManager.shared)
         .environmentObject(WebSocketManager.shared)
 }
 

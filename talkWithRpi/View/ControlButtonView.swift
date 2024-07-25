@@ -9,9 +9,10 @@ import SwiftUI
 
 struct ControlButtonView: View {
     @EnvironmentObject var recordAllDataModel: RecordAllDataModel
-    @EnvironmentObject var motionManager: MotionManager
-    @EnvironmentObject var cameraManager: CameraManager
+//    @EnvironmentObject var cameraManager: CameraManager
     @EnvironmentObject var webSocketManager: WebSocketManager
+//    @EnvironmentObject var arRecorder: ARRecorder
+    
     @State var isRunningTimer = false
     
     @State private var startTime = Date()
@@ -91,6 +92,7 @@ struct ControlButtonView: View {
     ControlButtonView()
         .environmentObject(RecordAllDataModel())
         .environmentObject(MotionManager.shared)
-        .environmentObject(CameraManager.shared)
+//        .environmentObject(CameraManager.shared)
         .environmentObject(WebSocketManager.shared)
+        .environmentObject(ARRecorder.shared)
 }
