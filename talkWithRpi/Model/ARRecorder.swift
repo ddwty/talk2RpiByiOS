@@ -4,14 +4,15 @@
 //
 //  Created by Tianyu on 7/25/24.
 //
-
 import Foundation
 import AVFoundation
 import Photos
 import ARKit
+import SwiftData
 
 class ARRecorder: NSObject, ObservableObject {
-    static  let shared = ARRecorder()
+    static let shared = ARRecorder()
+    
     private var assetWriter: AVAssetWriter?
     private var assetWriterInput: AVAssetWriterInput?
     private var pixelBufferAdaptor: AVAssetWriterInputPixelBufferAdaptor?
@@ -19,18 +20,25 @@ class ARRecorder: NSObject, ObservableObject {
     private var frameNumber: Int64 = 0
     private var videoOutputURL: URL?
     private var timestamps: [Double] = []
+    var frameDataArray: [ARData] = []
     
     private override init() {
         super.init()
     }
     
+
+    
+    // 每一帧都在调用
     func recordFrame(_ frame: ARFrame) {
+        // recording之后才执行下面代码
         guard isRecording, let pixelBufferAdaptor = pixelBufferAdaptor, let assetWriterInput = assetWriterInput else { return }
         
         if assetWriterInput.isReadyForMoreMediaData {
             let depthBuffer = frame.sceneDepth?.depthMap
             let pixelBuffer = frame.capturedImage
-            let presentationTime = CMTime(value: frameNumber, timescale: 60)
+            
+            // TODO: - 和AR帧率保持一致
+            let presentationTime = CMTime(value: frameNumber, timescale: 30)
             
             if pixelBufferAdaptor.append(pixelBuffer, withPresentationTime: presentationTime) {
                 frameNumber += 1
@@ -38,6 +46,10 @@ class ARRecorder: NSObject, ObservableObject {
                 if let depthBuffer = depthBuffer {
                     // 处理深度信息
                 }
+                
+                // 添加每帧的时间戳和相机变换矩阵到数组中
+                let frameData = ARData(timestamp: frame.timestamp, transform: frame.camera.transform)
+                self.frameDataArray.append(frameData)
                 
             } else {
                 print("Error appending pixel buffer")
@@ -81,6 +93,7 @@ class ARRecorder: NSObject, ObservableObject {
                     
                     assetWriter.startWriting()
                     assetWriter.startSession(atSourceTime: .zero)
+                    self.frameDataArray.removeAll() // 清空数组以开始新的录制
                     
                     self.isRecording = true
                     self.frameNumber = 0
@@ -99,19 +112,35 @@ class ARRecorder: NSObject, ObservableObject {
     }
     
     func stopRecording(completion: @escaping (URL?) -> Void) {
-        guard isRecording else { return }
-        
-        isRecording = false
-        assetWriterInput?.markAsFinished()
-        
-        assetWriter?.finishWriting { [weak self] in
-            guard let self = self else { return }
-            self.saveVideoToPhotoLibrary(videoURL: self.videoOutputURL)
-            completion(self.assetWriter?.outputURL)
+            guard isRecording else { return }
+            
+            isRecording = false
+            assetWriterInput?.markAsFinished()
+            
+            assetWriter?.finishWriting { [weak self] in
+                guard let self = self else { return }
+                self.saveVideoToPhotoLibrary(videoURL: self.videoOutputURL)
+                completion(self.assetWriter?.outputURL)
+                
+                // 保存记录到 SwiftData
+//                if let url = self.assetWriter?.outputURL {
+//                    let duration = self.calculateRecordingDuration()
+//                    let recordingHistory = RecordingHistory(date: Date(), fileURL: url, duration: duration, frameDataArray: self.frameDataArray)
+//                    modelContext.insert(recordingHistory)
+//                    
+//                    do {
+//                        try modelContext.save()
+//                    } catch {
+//                        print("Failed to save recording history: \(error.localizedDescription)")
+//                    }
+//                }
+            }
         }
-    }
     
-    
+    private func calculateRecordingDuration() -> TimeInterval {
+            // 计算录制的持续时间
+            return TimeInterval(frameNumber) / 30.0 // Assuming 30 FPS
+        }
     
     private func saveVideoToPhotoLibrary(videoURL: URL?) {
         guard let videoURL = videoURL else { return }
@@ -130,4 +159,7 @@ class ARRecorder: NSObject, ObservableObject {
             }
         }
     }
+    
+    
 }
+

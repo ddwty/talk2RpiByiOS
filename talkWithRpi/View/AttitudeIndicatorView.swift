@@ -66,13 +66,14 @@ struct AttitudeIndicatorView: View {
                 .padding(.horizontal)
             }
             .frame(width: width * 0.25)
+            .border(.purple)
             
             
             Spacer()
             
             VStack {
                 Spacer()
-                Text("Acceleration (0.1/g)")
+                Text("Acceleration (0.1g)")
                     .font(.headline)
                 Divider()
                 //                        GeometryReader { geometry in

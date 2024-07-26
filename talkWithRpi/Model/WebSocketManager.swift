@@ -18,115 +18,101 @@ struct Force: Codable {
     let value: [Double]?
 }
 
-struct ImuData: Codable {
-    let quat: [Double]
-    let time_stamp: TimeStamp
-}
-
-struct FingerFource: Codable {
+struct FingerForce: Codable {
     let force: Force?
     let time_stamp: TimeStamp
 }
 
+struct FingerAngle: Codable {
+    let time_stamp: TimeStamp
+    let data: Int
+}
+
+// TODO: - 退到后台重新进入重连
 class WebSocketManager: ObservableObject {
     static let shared = WebSocketManager()
-    @Published var recordedForceData: [ForceData] = []  //用于储存
-    @Published var imuData: ImuData?
+    var recordedForceData: [ForceData] = []  //用于储存
+    var recordedAngleData: [AngleData] = []
     @Published var time: TimeStamp?
-    //    @Published var connected = false {
+    //    @Published var isConnected = false {
     //            didSet {
-    //                if connected {
+    //                if isConnected {
     //                    pingTimer?.invalidate()
     //                } else if shouldPing {
     //                    startPingTimer()
     //                }
     //            }
     //        }
-    @Published var connected = false
-    @Published var isRecording = false
-    @Published var image: UIImage?
+    
+   
+    @Published var isConnected = false
+    
+   
     @Published var hostName: String = "raspberrypi.local"
     @Published var receivedMessage: String = ""
     
-    private var imuSocket: WebSocket?
-    private var videoSocket: WebSocket?
+    private var angelSocket: WebSocket?
     private var leftFingerSocket: WebSocket?
     private var pingTimer: Timer?
     private var shouldPing: Bool = true
+    var isRecording = false
     
+    
+    private var isLeftFingerConnected = false {
+            didSet {
+                updateConnectionStatus()
+            }
+        }
+        private var isAngelConnected = false {
+            didSet {
+                updateConnectionStatus()
+            }
+        }
+    
+    // MARK: - And both left finger and angel
+    private func updateConnectionStatus() {
+        self.isConnected = isLeftFingerConnected && isAngelConnected
+    }
     
     private init() {
-        connectToServer()
-        connectLeftFinger()
+//        connectToServer()
         self.recordedForceData.reserveCapacity(10000)
+        connectLeftFinger()
+        connectAngel()
         
-        //        var request = URLRequest(url: URL(string: "ws://\(self.hostName)")!)
-        //        request.timeoutInterval = 5
-        //        socket = WebSocket(request: request)
-        //        socket?.delegate = self
-    }
-    private func startPingTimer() {
-        pingTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-            self.pingServer()
-        }
-    }
-    
-    func pingServer() {
-        //        guard shouldPing else { return }
-        //            guard !connected else { return }
-        guard let url = URL(string: "http://\(self.hostName):8080/ping") else { return }
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let httpResponse = response as? HTTPURLResponse {
-                DispatchQueue.main.async {
-                    self.connected = (httpResponse.statusCode == 200)
-                    if self.connected {
-                        print("Connected \(Date())")
-                    }
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.connected = false
-                }
-            }
-        }.resume()
-    }
-    
-    func connectToServer() {
-        startPingTimer()
-        if self.connected {
-            connectLeftFinger()
-        }
-    }
-    
-    func reConnectToServer() {
-        shouldPing = true
-        pingServer()
     }
     
     func disconnect() {
         shouldPing = false
-        connected = false
-        imuSocket?.disconnect()
-        videoSocket?.disconnect()
+        isLeftFingerConnected = false
+        isAngelConnected = false
+        angelSocket?.disconnect()
         leftFingerSocket?.disconnect()
     }
     
     func connectLeftFinger() {
-        let fingerRequest = URLRequest(url: URL(string: "ws://\(self.hostName):8080/left_finger/force")!)
-        leftFingerSocket = WebSocket(request: fingerRequest)
+        var leftFingerRequest = URLRequest(url: URL(string: "ws://\(self.hostName):8080/left_finger/force")!)
+        leftFingerSocket = WebSocket(request: leftFingerRequest)
+        leftFingerSocket?.connect()
+        leftFingerRequest.timeoutInterval = 50
         leftFingerSocket?.onEvent = { event in
                     switch event {
                     case .connected(let headers):
-                        self.connected = true
-                        print("WebSocket connected with headers: \(headers)")
+                        self.isLeftFingerConnected = true
+                        
+                        print("WebSocket is connected to left finger: \(headers)")
+                        print("isLeftFingerConnected: \(self.isLeftFingerConnected)")
+                        
                     case .disconnected(let reason, let code):
-                        self.connected = false
-                        print("WebSocket disconnected: \(reason) with code: \(code)")
+                        self.isLeftFingerConnected = false
+                        print("WebSocket disconnected: \(reason) to left finger with code: \(code)")
+                        
                     case .text(let string):
                         if self.isRecording {
                             self.handleLeftFingerMessage(string: string)
-                            print("handle finger message, is recording: \(self.isRecording)")
+//                            print("Receive text from left finger message, is recording: \(self.isRecording)")
                         }
+//                        print("\(string)")
                     case .binary(let data):
                         print("Received data: \(data.count)")
                     case .ping(_):
@@ -138,16 +124,60 @@ class WebSocketManager: ObservableObject {
                     case .reconnectSuggested(_):
                         break
                     case .cancelled:
-                        self.connected = false
+                        self.isLeftFingerConnected = false
                         print("WebSocket is cancelled")
                     case .peerClosed:
                         break
                     case .error(let error):
-                        self.connected = false
+                        self.isLeftFingerConnected = false
                         print("WebSocket encountered an error: \(error?.localizedDescription ?? "")")
                     }
                 }
-        leftFingerSocket?.connect()
+        
+    }
+    
+    func connectAngel() {
+        var angelRequest = URLRequest(url: URL(string: "ws://\(self.hostName):8080/angle")!)
+       angelSocket = WebSocket(request: angelRequest)
+       angelSocket?.connect()
+        angelRequest.timeoutInterval = 50
+        angelSocket?.onEvent = { event in
+                    switch event {
+                    case .connected(let headers):
+                        self.isAngelConnected = true
+                        print("WebSocket is connected to angel: \(headers)")
+                        print("isAngleConnected: \(self.isAngelConnected)")
+                        
+                    case .disconnected(let reason, let code):
+                        self.isAngelConnected = false
+                        print("WebSocket disconnected: \(reason) to angel with code: \(code)")
+                        
+                    case .text(let string):
+                        if self.isRecording {
+//                            self.handleLeftFingerMessage(string: string)
+                        }
+//                        print("\(string)")
+                    case .binary(let data):
+                        print("Received data: \(data.count)")
+                    case .ping(_):
+                        break
+                    case .pong(_):
+                        break
+                    case .viabilityChanged(_):
+                        break
+                    case .reconnectSuggested(_):
+                        break
+                    case .cancelled:
+                        self.isLeftFingerConnected = false
+                        print("WebSocket is cancelled")
+                    case .peerClosed:
+                        break
+                    case .error(let error):
+                        self.isLeftFingerConnected = false
+                        print("WebSocket encountered an error: \(error?.localizedDescription ?? "")")
+                    }
+                }
+        
     }
     
     func startRecordingForceData() {
@@ -159,17 +189,16 @@ class WebSocketManager: ObservableObject {
     func stopRecordingForceData() {
         isRecording = false
     }
-    
-    
+}
+
+extension WebSocketManager {
     func handleLeftFingerMessage(string: String) {
             if let data = string.data(using: .utf8) {
-                if let fingerForce = try? JSONDecoder().decode(FingerFource.self, from: data) {
+                if let fingerForce = try? JSONDecoder().decode(FingerForce.self, from: data) {
                     let forceData = ForceData(
                         timeStamp: "\(fingerForce.time_stamp.secs).\(fingerForce.time_stamp.nanos)",
                         forceData: fingerForce.force?.value)
-//                    print("force data1: \(recordedForceData)")
                     DispatchQueue.main.async {
-//                        print("force data1: \(recordedForceData)")
                         if self.isRecording {
                             self.recordedForceData.append(forceData)
                         }
@@ -178,5 +207,19 @@ class WebSocketManager: ObservableObject {
             }
         
     }
+    
+    func handleAngleMessage(string: String) {
+        if let data = string.data(using: .utf8) {
+            if let fingerAngle = try? JSONDecoder().decode(FingerAngle.self, from: data) {
+                let angleData = AngleData(
+                    timeStamp: "\(fingerAngle.time_stamp.secs).\(fingerAngle.time_stamp.nanos)", angle: fingerAngle.data)
+                DispatchQueue.main.async {
+                    if self.isRecording {
+                        self.recordedAngleData.append(angleData)
+                    }
+                }
+            }
+        }
+    }
+    
 }
-

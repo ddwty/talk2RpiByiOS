@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct talkWithRpiApp: App {
     @StateObject private var recordAllDataModel = RecordAllDataModel()
+   
+        
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -18,6 +21,7 @@ struct talkWithRpiApp: App {
 //                .environmentObject(CameraManager.shared)
                 .environmentObject(WebSocketManager.shared)
                 .environmentObject(ARRecorder.shared)
+                .modelContainer(for: ARStorgeData.self)
         }
     }
 }

@@ -6,14 +6,19 @@
 //
 
 import SwiftUI
-
+import SwiftData
 struct ControlButtonView: View {
     @EnvironmentObject var recordAllDataModel: RecordAllDataModel
-//    @EnvironmentObject var cameraManager: CameraManager
+    //    @EnvironmentObject var cameraManager: CameraManager
     @EnvironmentObject var webSocketManager: WebSocketManager
-//    @EnvironmentObject var arRecorder: ARRecorder
+    @Environment(\.modelContext) private var modelContext
+    //    @EnvironmentObject var arRecorder: ARRecorder
+    
+    
     
     @State var isRunningTimer = false
+    @State var isWaitingtoSave = false
+    @State var isSaved = false
     
     @State private var startTime = Date()
     @State private var display = "00:00:00"
@@ -21,24 +26,20 @@ struct ControlButtonView: View {
     
     var body: some View {
         VStack {
-//            Image(systemName: "wifi.router")
-//                .resizable()
-//                .aspectRatio(contentMode: .fit)
-//                .frame(width: 60, height: 60)
-//                .symbolEffect(.variableColor.iterative.reversing, isActive: Bool)
-          
             Button(action: {
                 withAnimation {
                     if isRunningTimer {
                         recordAllDataModel.stopRecordingData()
                         timer.upstream.connect().cancel()
                         self.isRunningTimer = false
+                        self.isWaitingtoSave = true
                     } else {
                         recordAllDataModel.startRecordingData()
                         display = "00:00:00"
                         startTime = Date()
                         timer = Timer.publish(every: 0.01, on: .main, in: .common).autoconnect()
                         self.isRunningTimer = true
+                        self.isWaitingtoSave = false
                     }
                 }
             }) {
@@ -47,29 +48,29 @@ struct ControlButtonView: View {
                         Image(systemName: "stop.circle.fill")
                             .resizable()
                             .frame(width: 30, height: 30)
-//                            .symbolVariant(.fill.circle)
+                        //                            .symbolVariant(.fill.circle)
                             .foregroundColor(.white)
                             .symbolEffect(.pulse.wholeSymbol)
-                           
+                        
                         Text(display)
                             .font(.system(.headline, design: .monospaced))
                             .foregroundColor(.white)
-//                            .frame(width: 80, alignment: .leading)
+                        //                            .frame(width: 80, alignment: .leading)
                     } else {
                         Text("Start Recording")
                             .fontWeight(.medium)
                             .foregroundColor(.white)
                     }
                 }
-//                .frame(width: 180, height: 30)
+                //                .frame(width: 180, height: 30)
                 .frame(height: 25)
                 .padding()
-                .background(webSocketManager.connected ? (isRunningTimer ? Color.red : Color.green) : Color.gray)
+                .background(webSocketManager.isConnected ? (isRunningTimer ? Color.red : Color.green) : Color.gray)
                 .clipShape(Capsule())
                 
-//                .shadow(color: .green, radius: 5)
+                //                .shadow(color: .green, radius: 5)
             }
-            .disabled(webSocketManager.connected == false)
+            .disabled(webSocketManager.isConnected == false)
             .onReceive(timer) { _ in
                 if isRunningTimer {
                     let duration = Date().timeIntervalSince(startTime)
@@ -82,7 +83,37 @@ struct ControlButtonView: View {
             .onAppear {
                 timer.upstream.connect().cancel()
             }
+            
+            Button(action: {
+                guard !recordAllDataModel.recordedARData.isEmpty else { return }
+                // TODO: - 记得改一下这里的Date
+                let newARData = ARStorgeData(createTime: Date(), timeDuration: recordAllDataModel.recordingDuration, data: recordAllDataModel.recordedARData)
+                modelContext.insert(newARData)
+                
+                do {
+                        try modelContext.save()
+                        isSaved = true
+                    } catch {
+                        print("Failed to save AR data: \(error.localizedDescription)")
+                    }
+                
+                
+            }) {
+                Text("Save")
+            }
         }
+        
+        .alert(
+            "Recording completed.",
+            isPresented: $isSaved
+        ) {
+            Button("OK") {
+                // Handle the acknowledgement.
+            }
+        } message: {
+            Text("You have succefully recorded an action😁")
+        }
+        
     }
 }
 
@@ -92,7 +123,7 @@ struct ControlButtonView: View {
     ControlButtonView()
         .environmentObject(RecordAllDataModel())
         .environmentObject(MotionManager.shared)
-//        .environmentObject(CameraManager.shared)
+    //        .environmentObject(CameraManager.shared)
         .environmentObject(WebSocketManager.shared)
         .environmentObject(ARRecorder.shared)
 }

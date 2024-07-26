@@ -63,8 +63,8 @@ class MotionManager: ObservableObject {
     
     @Published var motionData: MotionData
     @Published var motionDataArray: [MotionData] = [] // 用于可视化
-    @Published var recordedMotionData: [MotionData] = [] //用于储存
-    @Published var useHighAccuracy: Bool = true
+    @Published var recordedMotionData: [MotionData] = [] //用于储存,还没开始做
+    @Published var useHighAccuracy: Bool = false
     @Published var isRecording = false
     
     let queue = OperationQueue()
@@ -99,49 +99,50 @@ class MotionManager: ObservableObject {
     
     func startUpdates() {
         if motionManager.isDeviceMotionAvailable {
-            motionManager.deviceMotionUpdateInterval = 1/50
+            motionManager.deviceMotionUpdateInterval = 1/30
             motionManager.startDeviceMotionUpdates(using: useHighAccuracy ? .xArbitraryCorrectedZVertical : .xArbitraryZVertical, to: queue) { [weak self] data, error in
                 guard let self = self, let data = data else { return }
                 if self.initialAttitude == nil {
                     self.initialAttitude = data.attitude
                 }
                 
-                //            let attitude = data.attitude
-                //            let rotationRate = data.rotationRate
-                //
-                //            DispatchQueue.main.async {
-                //                self.motionData = MotionData(
-                //                    timestamp: Date(),
-                //                    attitude: MotionData.Attitude(pitch: attitude.pitch, yaw: attitude.yaw, roll: attitude.roll),
-                //                    rotationRate: MotionData.RotationRate(xRotationRate: rotationRate.x, yRotationRate: rotationRate.y, zRotationRate: rotationRate.z),
-                //                    rotationMatrix: attitude.rotationMatrix,
-                //                    quaternion: attitude.quaternion
-                //                )
-                //                if self.motionDataArray.count > 100 {
-                //                    self.motionDataArray.removeFirst()
-                //                }
-                //                self.motionDataArray.append(self.motionData)
-                //            }
+                            let attitude = data.attitude
+                            let rotationRate = data.rotationRate
+                
+                            DispatchQueue.main.async {
+                                self.motionData = MotionData(
+                                    timestamp: Date(),
+                                    attitude: MotionData.Attitude(pitch: attitude.pitch, yaw: attitude.yaw, roll: attitude.roll),
+                                    rotationRate: MotionData.RotationRate(xRotationRate: rotationRate.x, yRotationRate: rotationRate.y, zRotationRate: rotationRate.z),
+                                    acceleration: data.userAcceleration, rotationMatrix: attitude.rotationMatrix,
+                                    quaternion: attitude.quaternion
+                                )
+                                if self.motionDataArray.count > 100 {
+                                    self.motionDataArray.removeFirst()
+                                }
+                                
+                                self.motionDataArray.append(self.motionData)
+                            }
                 
                 // 计算相对于初始姿态的变化
-                let relativeAttitude = data.attitude
-                relativeAttitude.multiply(byInverseOf: self.initialAttitude!)
-                
-                let rotationRate = data.rotationRate
-                
-                DispatchQueue.main.async {
-                    self.motionData = MotionData(
-                        timestamp: Date(),
-                        attitude: MotionData.Attitude(pitch: relativeAttitude.pitch, yaw: relativeAttitude.yaw, roll: relativeAttitude.roll),
-                        rotationRate: MotionData.RotationRate(xRotationRate: rotationRate.x, yRotationRate: rotationRate.y, zRotationRate: rotationRate.z),
-                        acceleration: data.userAcceleration, rotationMatrix: relativeAttitude.rotationMatrix,
-                        quaternion: relativeAttitude.quaternion
-                    )
-                    if self.motionDataArray.count > 50 {
-                        self.motionDataArray.removeFirst()
-                    }
-                    self.motionDataArray.append(self.motionData)
-                }
+//                let relativeAttitude = data.attitude
+//                relativeAttitude.multiply(byInverseOf: self.initialAttitude!)
+//                
+//                let rotationRate = data.rotationRate
+//                
+//                DispatchQueue.main.async {
+//                    self.motionData = MotionData(
+//                        timestamp: Date(),
+//                        attitude: MotionData.Attitude(pitch: relativeAttitude.pitch, yaw: relativeAttitude.yaw, roll: relativeAttitude.roll),
+//                        rotationRate: MotionData.RotationRate(xRotationRate: rotationRate.x, yRotationRate: rotationRate.y, zRotationRate: rotationRate.z),
+//                        acceleration: data.userAcceleration, rotationMatrix: relativeAttitude.rotationMatrix,
+//                        quaternion: relativeAttitude.quaternion
+//                    )
+//                    if self.motionDataArray.count > 50 {
+//                        self.motionDataArray.removeFirst()
+//                    }
+//                    self.motionDataArray.append(self.motionData)
+//                }
             }
         }
     }

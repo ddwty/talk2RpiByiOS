@@ -20,41 +20,14 @@ struct MyARView: View {
     var body: some View {
         VStack {
             ARViewContainer(cameraTransform: $cameraTransform, recorder: recorder)
-                .edgesIgnoringSafeArea(.all)
+//                .edgesIgnoringSafeArea(.all)
+                
             
 //            Text("Camera Transform:")
 //            Text("\(cameraTransform.description)")
 //                .font(.footnote)
 //                .padding()
-//            
-//            Button(action: {
-//                if isRecording {
-//                    recorder.stopRecording { url in
-//                        isRecording = false
-//                        isProcessing = false
-//                        if let url = url {
-//                            print("Video saved to: \(url.absoluteString)")
-//                        }
-//                    }
-//                } else {
-//                    isProcessing = true
-//                    recorder.startRecording { success in
-//                        isProcessing = false
-//                        if success {
-//                            isRecording = true
-//                        } else {
-//                            print("Failed to start recording")
-//                        }
-//                    }
-//                }
-//            }) {
-//                Text(isRecording ? "Stop Recording" : (isProcessing ? "Starting..." : "Start Recording"))
-//                    .padding()
-//                    .background(Color.blue)
-//                    .foregroundColor(.white)
-//                    .cornerRadius(10)
-//                    .disabled(isProcessing)
-//            }
+//
         }
     }
 }
@@ -75,7 +48,13 @@ struct ARViewContainer: UIViewRepresentable {
     func makeUIView(context: Context) -> ARView {
         let arView = ARView(frame: .zero)
         arView.setupARView()
+//        arView.debugOptions.insert(.showStatistics)
+        arView.debugOptions.insert(.showWorldOrigin)
+        
         arView.session.delegate = context.coordinator
+        
+        //
+//        arView.environment.background = .color(.black)
         return arView
     }
 
@@ -108,8 +87,10 @@ extension ARView {
     func setupARView() {
         let config = ARWorldTrackingConfiguration()
 //        config.frameSemantics = .sceneDepth
+        config.isAutoFocusEnabled = false
         session.run(config)
-        debugOptions = [.showWorldOrigin]
+//        debugOptions = [.showWorldOrigin]
+//        debugOptions = []
     }
 }
 

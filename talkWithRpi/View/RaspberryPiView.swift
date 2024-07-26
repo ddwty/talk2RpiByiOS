@@ -15,30 +15,30 @@ struct RaspberryPiView: View {
     @State private var message: String = ""
         var body: some View {
             VStack {
-                if webSocketManager.connected {
+                if webSocketManager.isConnected {
                     Label("Connected", systemImage: "checkmark.circle")
                         .font(.title)
                         .foregroundColor(.green)
-                        .symbolEffect(.bounce, value: webSocketManager.connected)
+                        .symbolEffect(.bounce, value: webSocketManager.isConnected)
                 } else {
                     Label("Disconnected", systemImage: "wifi.router")
                         .foregroundColor(.red)
                         .font(.title)
                         .symbolEffect(.variableColor.iterative.reversing)
                 }
-//                Label(webSocketManager.connected ? "Connected" : "Disconnected", systemImage: webSocketManager.connected ? "checkmark.circle" : "xmark.circle")
+//                Label(webSocketManager.isConnected ? "Connected" : "Disconnected", systemImage: webSocketManager.isConnected ? "checkmark.circle" : "xmark.circle")
 //                    .font(.title)
-//                    .foregroundColor(webSocketManager.connected ? .green : .red)
+//                    .foregroundColor(webSocketManager.isConnected ? .green : .red)
                 //                Button(action: {webSocketManager.connect()}) {
 //                HStack{
 //                    Button(action: {
-//                        if webSocketManager.connected {
+//                        if webSocketManager.isConnected {
 //                            webSocketManager.disconnect()
 //                        } else {
 //                            webSocketManager.reConnectToServer()
 //                        }
 //                    }) {
-//                        Text(webSocketManager.connected ? "Disconnect" : "Reconnect to Raspberry Pi")
+//                        Text(webSocketManager.isConnected ? "Disconnect" : "Reconnect to Raspberry Pi")
 //                    }
 //                    .buttonStyle(BorderedButtonStyle())
 //                    
@@ -48,7 +48,7 @@ struct RaspberryPiView: View {
 //                    }) {
 //                        Text("Get Force Data")
 //                    }
-//                    .disabled(!webSocketManager.connected)
+//                    .disabled(!webSocketManager.isConnected)
 ////                    .padding()
 //                    
 //                    

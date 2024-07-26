@@ -8,69 +8,63 @@
 import SwiftUI
 
 struct PanelView: View {
-//    @StateObject var motionManager = MotionManager()
+    //    @StateObject var motionManager = MotionManager()
     @EnvironmentObject var motionManager: MotionManager
     
     @State var motionData: [MotionData] = []
-//    @StateObject var recordAllDataManager = RecordAllDataModel()
+    @State var showBigAr = false
+    //    @StateObject var recordAllDataManager = RecordAllDataModel()
     
     var body: some View {
         GeometryReader { geometry in
             VStack {
                 ChartView(width: geometry.size.width, height: geometry.size.height)
                     .padding()
-//                HStack {
-//                    Spacer()
-//                    RaspberryPiView()
-//                    Spacer()
-//                    ControlButtonView()
-//                    Spacer()
-//                }
-                RaspberryPiView()
-                ControlButtonView()
-                
-                HStack {
-//                    CameraView(width: geometry.size.width, height: geometry.size.height)
-//                        .offset(y: -50)
-                    MyARView()
-                        .frame(width: 200, height: 150)
-                        .offset(y: -150)
-                    Spacer()
-//                    MyARView()
-//                        .frame(width: 200, height: 100)
-                    
-                }
-                
-                
-                //            Spacer()
-                //                .padding(.top, 40)
-                //                .padding()
-                //            AttitudeIndicatorView(motionManager: motionManager)
-                //                .border(.green)
-                
-                //            HStack {
-                //                Text("haha")
-                //                VStack{
-                //                    Text("haha")
-                //                    Text("haha")
-                ////                    RaspberryPiView()
-                ////                    ControlButtonView()
-                //                }
-                ////                CameraView()
-                //            }
-                //            Spacer()
+                    HStack {
+                        MyARView()
+                            .cornerRadius(15)
+                        
+//                            .padding()
+                            .frame(
+                                width: showBigAr ? geometry.size.width  : geometry.size.width * 0.3,
+                                height:  showBigAr ? geometry.size.height : geometry  .size.height * 0.3
+                            )
+                            .onTapGesture {
+                                withAnimation(.easeInOut) {
+                                    self.showBigAr.toggle()
+                                }
+                            }
+//                            .border(.green)
+                        Spacer()
+                        VStack {
+                            RaspberryPiView()
+                            ControlButtonView()
+                                .fixedSize()
+                        }
+                        .border(.blue)
+                        Spacer()
+                        Rectangle()
+                            .cornerRadius(15)
+                            .frame(
+                                width:  geometry.size.width * 0.3,
+                                height: geometry  .size.height * 0.3
+                            )
+                        
+                    }
                 
             }
+            .border(.yellow)
+            
         }
-//        .environmentObject(recordAllDataManager)
     }
-    }
+}
+
 
 #Preview(traits: .landscapeRight) {
     PanelView()
         .environmentObject(RecordAllDataModel())
         .environmentObject(MotionManager.shared)
-//        .environmentObject(CameraManager.shared)
         .environmentObject(WebSocketManager.shared)
+        .environmentObject(ARRecorder.shared)
 }
 

@@ -7,33 +7,40 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 class RecordAllDataModel: ObservableObject {
     private var isRecording = false
-    //    @EnvironmentObject var arRecorder: ARRecorder
+    let arRecorder = ARRecorder.shared
     
     private let motionManager = MotionManager.shared
     //    private let cameraManager = CameraManager.shared
     private let webSocketManager = WebSocketManager.shared
-    private let arRecorder = ARRecorder.shared
+//    private let arRecorder = ARRecorder.shared
     
     
     private var timer: Timer?
     private var recordingStartTime: Date?
+    
+    // TODO: - 这个好像没用吧
     @Published var recordingDuration: TimeInterval = 0
     
     var recordedMotionData: [MotionData] = []
-    var recordedForceData:[ForceData?] = []
-    
+    var recordedForceData: [ForceData?] = []
+    var recordedARData: [ARData] = []
+//    var recordedARTransformData: [] = []
     
     func startRecordingData() {
         guard !isRecording else { return }
         
         recordedMotionData.removeAll()
         recordedForceData.removeAll()
-        print("Start recording")
+        recordedARData.removeAll()
+        
         //            cameraManager.startRecording()
+        
         webSocketManager.startRecordingForceData()
+        
         arRecorder.startRecording { success in
             DispatchQueue.main.async {
                 if success {
@@ -46,8 +53,7 @@ class RecordAllDataModel: ObservableObject {
             }
         }
         webSocketManager.isRecording = true
-        isRecording = true
-        print(recordedForceData.capacity)
+        
     }
     
     func stopRecordingData() {
@@ -57,7 +63,7 @@ class RecordAllDataModel: ObservableObject {
         //            cameraManager.stopRecording()
         webSocketManager.stopRecordingForceData()
         motionManager.stopRecording()
-        arRecorder.stopRecording { url in
+        arRecorder.stopRecording() { url in
                     DispatchQueue.main.async {
                         if let url = url {
                             print("Video saved to: \(url.absoluteString)")
@@ -69,17 +75,30 @@ class RecordAllDataModel: ObservableObject {
         
         recordedMotionData = motionManager.motionDataArray
         recordedForceData = webSocketManager.recordedForceData
-        print("Recorded force data length: \(recordedForceData.count)")
+        recordedARData = arRecorder.frameDataArray
+        print("Recorded force data length: \(recordedForceData.count), ar data length: \(recordedARData.count)")
         print("Force data:\(recordedForceData)")
-        print("Force data:\(webSocketManager.recordedForceData)")
+        print("ARData: \(recordedARData)")
         
-        isRecording = false
+        
+        self.isRecording = false
         
         stopTimer()
-        print(recordedForceData.capacity)
+        
+// Create ARStorgeData
+//        let createTime = Date()
+//        let timeDuration = recordingDuration
+//        let arStorageData = ARStorgeData(createTime: createTime, timeDuration: timeDuration, data: recordedARData)
+//        
+//        // Here you can save arStorageData to your desired storage or further process it
+//        
+//        // Save to persistent storage
+//            saveARStorageData(arStorageData)
+
     }
 }
 
+// TODO: - 放到control button视图中
 extension RecordAllDataModel {
     private func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { [weak self] _ in
@@ -101,4 +120,12 @@ extension RecordAllDataModel {
         return String(format: "%02d:%02d:%2d", minutes, seconds, milliseconds)
     }
     
+    
+//    private func saveARStorageData(_ arStorageData: ARStorgeData) {
+//        // Implement the logic to save arStorageData
+//        // For example, using Core Data, Realm, or writing to a file
+//    }
+    
 }
+
+
