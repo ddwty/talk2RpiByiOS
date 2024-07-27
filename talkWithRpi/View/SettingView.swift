@@ -8,8 +8,18 @@
 import SwiftUI
 
 struct SettingView: View {
+    @AppStorage("ignore websocket") private var ignorWebsocket = false
     var body: some View {
-        Text("Settings")
+        NavigationStack {
+            Form {
+                Toggle(isOn: $ignorWebsocket) {
+                    Label("ignore websocket", systemImage: "network.slash")
+                }
+            }
+            .navigationTitle("Settings")
+        }
+       
+        
         
     }
 }
@@ -17,3 +27,4 @@ struct SettingView: View {
 #Preview {
     SettingView()
 }
+

@@ -10,19 +10,19 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
-            
             PanelView()
             .tabItem {
                 Label("Panel", systemImage: "record.circle" )
             }
-            SettingView()
-                .tabItem {
-                    Label("Settings",systemImage: "gear")
-                }
             HistoryView()
                 .tabItem {
                     Label("History",systemImage: "clock")
                 }
+            SettingView()
+                .tabItem {
+                    Label("Settings",systemImage: "gear")
+                }
+           
            
 //            MyARView()
 //                .tabItem {
@@ -39,4 +39,5 @@ struct ContentView: View {
 //        .environmentObject(CameraManager.shared)
         .environmentObject(WebSocketManager.shared)
         .environmentObject(ARRecorder.shared)
+        .modelContainer(previewContainer)
 }

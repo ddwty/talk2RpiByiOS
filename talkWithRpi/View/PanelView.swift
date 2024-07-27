@@ -44,6 +44,7 @@ struct PanelView: View {
                         .border(.blue)
                         Spacer()
                         Rectangle()
+                            .foregroundColor(Color.clear)
                             .cornerRadius(15)
                             .frame(
                                 width:  geometry.size.width * 0.3,

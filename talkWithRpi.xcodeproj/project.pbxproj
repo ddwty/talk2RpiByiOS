@@ -50,6 +50,7 @@
 			membershipExceptions = (
 				ClientView.swift,
 				ForTCP_Server.swift,
+				NavigationStack.swift,
 				PureUsbImgView.swift,
 				PureUsbView.swift,
 				SeverView.swift,
@@ -57,6 +58,13 @@
 				TestMotion.swift,
 				TestWebsocket.swift,
 				ViaEthernetView.swift,
+			);
+			target = 3DF26C132C423DB700FE2A12 /* talkWithRpi */;
+		};
+		3D4F2CAD2C55047400C4FB6A /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				PreviewSampleData.swift,
 			);
 			target = 3DF26C132C423DB700FE2A12 /* talkWithRpi */;
 		};
@@ -89,6 +97,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3D13B8932C4BE8B400004873 /* TestView */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3D13B8942C4BE8C700004873 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = TestView; sourceTree = "<group>"; };
+		3D4F2CA82C5503FF00C4FB6A /* support */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3D4F2CAD2C55047400C4FB6A /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = support; sourceTree = "<group>"; };
 		3DDFF2092C4FD088006BD86C /* Camera */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3DDFF20C2C4FD088006BD86C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Camera; sourceTree = "<group>"; };
 		3DF26C2B2C42A54900FE2A12 /* Model */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3DF26C2C2C42A55300FE2A12 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Model; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -105,6 +114,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D4F2CA92C55040D00C4FB6A /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		3DF26C0B2C423DB700FE2A12 = {
 			isa = PBXGroup;
 			children = (
@@ -124,9 +140,11 @@
 		3DF26C162C423DB700FE2A12 /* talkWithRpi */ = {
 			isa = PBXGroup;
 			children = (
+				3D4F2CA92C55040D00C4FB6A /* New Group */,
 				3DF26C172C423DB700FE2A12 /* talkWithRpiApp.swift */,
 				3DF26C2D2C42A55800FE2A12 /* View */,
 				3DF26C2B2C42A54900FE2A12 /* Model */,
+				3D4F2CA82C5503FF00C4FB6A /* support */,
 				3DF26C1D2C423DB900FE2A12 /* Assets.xcassets */,
 				3DF26C1F2C423DB900FE2A12 /* Preview Content */,
 			);

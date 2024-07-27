@@ -46,6 +46,7 @@ class ARStorgeData {
     var timeDuration: TimeInterval
     var data: [ARData]
     
+    
     init(createTime: Date, timeDuration: TimeInterval, data: [ARData]) {
         self.createTime = createTime
         self.timeDuration = timeDuration

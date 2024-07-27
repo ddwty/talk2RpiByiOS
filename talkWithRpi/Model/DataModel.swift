@@ -27,51 +27,6 @@ struct AngleData {
 //    let cameraTransform: simd_float4x4
 //}
 
-//struct ARFrameData: Codable {
-//    let timestamp: Double
-//    let cameraTransform: simd_float4x4
-//    
-//    init(timestamp: Double, cameraTransform: simd_float4x4) {
-//        self.timestamp = timestamp
-//        self.cameraTransform = cameraTransform
-//    }
-//    
-//    private enum CodingKeys: String, CodingKey {
-//        case timestamp
-//        case cameraTransform
-//    }
-//    
-//    init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        timestamp = try container.decode(Double.self, forKey: .timestamp)
-//        
-//        let transformArray = try container.decode([Float].self, forKey: .cameraTransform)
-//        guard transformArray.count == 16 else {
-//            throw DecodingError.dataCorruptedError(forKey: .cameraTransform, in: container, debugDescription: "Invalid matrix size")
-//        }
-//        
-//        cameraTransform = simd_float4x4(columns: (
-//            SIMD4<Float>(transformArray[0], transformArray[1], transformArray[2], transformArray[3]),
-//            SIMD4<Float>(transformArray[4], transformArray[5], transformArray[6], transformArray[7]),
-//            SIMD4<Float>(transformArray[8], transformArray[9], transformArray[10], transformArray[11]),
-//            SIMD4<Float>(transformArray[12], transformArray[13], transformArray[14], transformArray[15])
-//        ))
-//    }
-//    
-//    func encode(to encoder: Encoder) throws {
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//        try container.encode(timestamp, forKey: .timestamp)
-//        
-//        let transformArray = [
-//            cameraTransform.columns.0.x, cameraTransform.columns.0.y, cameraTransform.columns.0.z, cameraTransform.columns.0.w,
-//            cameraTransform.columns.1.x, cameraTransform.columns.1.y, cameraTransform.columns.1.z, cameraTransform.columns.1.w,
-//            cameraTransform.columns.2.x, cameraTransform.columns.2.y, cameraTransform.columns.2.z, cameraTransform.columns.2.w,
-//            cameraTransform.columns.3.x, cameraTransform.columns.3.y, cameraTransform.columns.3.z, cameraTransform.columns.3.w
-//        ]
-//        
-//        try container.encode(transformArray, forKey: .cameraTransform)
-//    }
-//}
 
 //struct ARData {
 //    let timestamp: Double
@@ -79,7 +34,7 @@ struct AngleData {
 //}
 @Model
 class ARData: ObservableObject {
-    var timestamp: Double
+    var timestamp: Double  // 这一帧的时间戳
     var transform: [Float] // 使用数组来存储矩阵数据
     
     init(timestamp: Double, transform: simd_float4x4) {

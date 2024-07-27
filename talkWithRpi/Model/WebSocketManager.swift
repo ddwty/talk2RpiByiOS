@@ -133,14 +133,13 @@ class WebSocketManager: ObservableObject {
                         print("WebSocket encountered an error: \(error?.localizedDescription ?? "")")
                     }
                 }
-        
     }
     
     func connectAngel() {
         var angelRequest = URLRequest(url: URL(string: "ws://\(self.hostName):8080/angle")!)
        angelSocket = WebSocket(request: angelRequest)
        angelSocket?.connect()
-        angelRequest.timeoutInterval = 50
+        angelRequest.timeoutInterval = 5000
         angelSocket?.onEvent = { event in
                     switch event {
                     case .connected(let headers):
